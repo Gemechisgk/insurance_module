@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Insurance Claim Sequence -->
+        <record id="sequence_insurance_claim" model="ir.sequence">
+            <field name="name">Insurance Claim</field>
+            <field name="code">insurance.claim</field>
+            <field name="prefix">CLM/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Incident Report Sequence -->
+        <record id="sequence_incident_report" model="ir.sequence">
+            <field name="name">Incident Report</field>
+            <field name="code">incident.report</field>
+            <field name="prefix">INC/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Office Inspection Sequence -->
+        <record id="sequence_office_inspection" model="ir.sequence">
+            <field name="name">Office Inspection</field>
+            <field name="code">office.inspection</field>
+            <field name="prefix">INS/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Fire Extinguisher Sequence -->
+        <record id="sequence_fire_extinguisher" model="ir.sequence">
+            <field name="name">Fire Extinguisher</field>
+            <field name="code">fire.extinguisher</field>
+            <field name="prefix">FE/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Vehicle Inspection Sequence -->
+        <record id="sequence_vehicle_inspection" model="ir.sequence">
+            <field name="name">Vehicle Inspection</field>
+            <field name="code">vehicle.inspection</field>
+            <field name="prefix">VI/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Employee Suggestion Sequence -->
+        <record id="sequence_employee_suggestion" model="ir.sequence">
+            <field name="name">Employee Suggestion</field>
+            <field name="code">employee.suggestion</field>
+            <field name="prefix">SUG/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Accident Investigation Sequence -->
+        <record id="sequence_accident_investigation" model="ir.sequence">
+            <field name="name">Accident Investigation</field>
+            <field name="code">accident.investigation</field>
+            <field name="prefix">INV/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo> 

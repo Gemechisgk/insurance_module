@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Corrective Actions List View -->
+        <record id="view_investigation_corrective_action_tree" model="ir.ui.view">
+            <field name="name">investigation.corrective.action.list</field>
+            <field name="model">investigation.corrective.action</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="action_type"/>
+                    <field name="priority"/>
+                    <field name="responsible_id"/>
+                    <field name="deadline"/>
+                    <field name="completion_date"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- List View -->
+        <record id="view_accident_investigation_tree" model="ir.ui.view">
+            <field name="name">accident.investigation.list</field>
+            <field name="model">accident.investigation</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list string="Accident Investigations">
+                    <field name="name"/>
+                    <field name="investigation_date"/>
+                    <field name="investigator_ids" widget="many2many_tags"/>
+                    <field name="incident_id"/>
+                    <field name="state"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_accident_investigation_form" model="ir.ui.view">
+            <field name="name">accident.investigation.form</field>
+            <field name="model">accident.investigation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Accident Investigation">
+                    <header>
+                        <button name="action_start_investigation" 
+                                string="Start Investigation" 
+                                type="object" 
+                                class="oe_highlight" 
+                                invisible="state != 'draft'"/>
+                        <button name="action_submit_review" 
+                                string="Submit for Review" 
+                                type="object" 
+                                class="oe_highlight" 
+                                invisible="state != 'in_progress'"/>
+                        <button name="action_approve" 
+                                string="Approve" 
+                                type="object" 
+                                class="oe_highlight" 
+                                invisible="state != 'review'"/>
+                        <button name="action_close" 
+                                string="Close Investigation" 
+                                type="object" 
+                                invisible="state != 'approved'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,review,approved,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="investigation_date"/>
+                                <field name="investigator_ids" widget="many2many_tags"/>
+                                <field name="incident_id"/>
+                            </group>
+                            <group>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Incident Details">
+                                <group>
+                                    <field name="incident_description"/>
+                                    <field name="root_cause"/>
+                                    <field name="contributing_factors"/>
+                                </group>
+                            </page>
+                            <page string="Investigation Findings">
+                                <group>
+                                    <field name="immediate_causes"/>
+                                    <field name="underlying_causes"/>
+                                    <field name="basic_causes"/>
+                                </group>
+                            </page>
+                            <page string="Evidence">
+                                <group>
+                                    <field name="physical_evidence"/>
+                                    <field name="witness_statements"/>
+                                    <field name="document_review"/>
+                                </group>
+                            </page>
+                            <page string="Corrective Actions">
+                                <field name="corrective_action_ids" context="{'default_investigation_id': id}"/>
+                            </page>
+                            <page string="Recommendations">
+                                <group>
+                                    <field name="recommendations"/>
+                                    <field name="preventive_measures"/>
+                                </group>
+                            </page>
+                            <page string="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_accident_investigation_search" model="ir.ui.view">
+            <field name="name">accident.investigation.search</field>
+            <field name="model">accident.investigation</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Accident Investigations">
+                    <field name="name"/>
+                    <field name="investigator_ids"/>
+                    <field name="incident_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <separator/>
+                    <filter string="My Investigations" name="my_investigations" domain="[('investigator_ids', 'in', uid)]"/>
+                    <separator/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Under Review" name="review" domain="[('state', '=', 'review')]"/>
+                    <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                    <filter string="Closed" name="closed" domain="[('state', '=', 'closed')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Investigation Date" name="investigation_date" context="{'group_by': 'investigation_date'}"/>
+                        <filter string="Status" name="status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_accident_investigation" model="ir.actions.act_window">
+            <field name="name">Accident Investigations</field>
+            <field name="res_model">accident.investigation</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_accident_investigation_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first accident investigation
+                </p>
+                <p>
+                    Track and manage accident investigations, from initial reporting through to resolution.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View -->
+        <record id="view_employee_suggestion_tree" model="ir.ui.view">
+            <field name="name">employee.suggestion.list</field>
+            <field name="model">employee.suggestion</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list string="Safety Suggestions">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="category"/>
+                    <field name="priority"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_employee_suggestion_form" model="ir.ui.view">
+            <field name="name">employee.suggestion.form</field>
+            <field name="model">employee.suggestion</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Safety Suggestion">
+                    <header>
+                        <button name="action_submit" 
+                                string="Submit" 
+                                type="object" 
+                                class="oe_highlight" 
+                                invisible="state != 'draft'"/>
+                        <button name="action_review" 
+                                string="Review" 
+                                type="object" 
+                                class="oe_highlight" 
+                                invisible="state != 'submitted'"/>
+                        <button name="action_approve" 
+                                string="Approve" 
+                                type="object" 
+                                class="oe_highlight" 
+                                invisible="state != 'under_review'"/>
+                        <button name="action_reject" 
+                                string="Reject" 
+                                type="object" 
+                                invisible="state != 'under_review'"/>
+                        <button name="action_reset_to_draft" 
+                                string="Reset to Draft" 
+                                type="object" 
+                                invisible="state != 'rejected'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,under_review,approved,rejected"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="department_id"/>
+                                <field name="category"/>
+                                <field name="priority" widget="priority"/>
+                            </group>
+                            <group>
+                                <field name="submission_date"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" placeholder="Describe your safety suggestion..."/>
+                            </page>
+                            <page string="Implementation Plan" invisible="state in ('draft', 'submitted')">
+                                <field name="implementation_plan_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="responsible_id"/>
+                                        <field name="deadline"/>
+                                        <field name="company_id" groups="base.group_multi_company"/>
+                                        <field name="state"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Review Comments" invisible="state == 'draft'">
+                                <field name="review_notes" placeholder="Add review comments..."/>
+                            </page>
+                            <page string="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_employee_suggestion_search" model="ir.ui.view">
+            <field name="name">employee.suggestion.search</field>
+            <field name="model">employee.suggestion</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Safety Suggestions">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="category"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <filter string="My Suggestions" name="my_suggestions" domain="[('employee_id.user_id', '=', uid)]"/>
+                    <filter string="High Priority" name="high_priority" domain="[('priority', '=', '3')]"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
+                    <filter string="Under Review" name="under_review" domain="[('state', '=', 'under_review')]"/>
+                    <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" name="employee" context="{'group_by': 'employee_id'}"/>
+                        <filter string="Department" name="department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Category" name="category" context="{'group_by': 'category'}"/>
+                        <filter string="Company" name="company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                        <filter string="Status" name="status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_employee_suggestion" model="ir.actions.act_window">
+            <field name="name">Safety Suggestions</field>
+            <field name="res_model">employee.suggestion</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_employee_suggestion_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first safety suggestion
+                </p>
+                <p>
+                    Submit and track safety improvement suggestions.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 

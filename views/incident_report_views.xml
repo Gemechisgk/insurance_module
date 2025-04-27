@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View -->
+        <record id="view_incident_report_tree" model="ir.ui.view">
+            <field name="name">incident.report.list</field>
+            <field name="model">incident.report</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list string="Incident Reports">
+                    <field name="name"/>
+                    <field name="incident_date"/>
+                    <field name="reported_by_id"/>
+                    <field name="location"/>
+                    <field name="severity"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_incident_report_form" model="ir.ui.view">
+            <field name="name">incident.report.form</field>
+            <field name="model">incident.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Incident Report">
+                    <header>
+                        <button name="action_report" 
+                                string="Report" 
+                                type="object" 
+                                class="oe_highlight"
+                                invisible="state != 'draft'"/>
+                        <button name="action_start_investigation" 
+                                string="Start Investigation" 
+                                type="object"
+                                invisible="state != 'reported' or not requires_investigation"/>
+                        <button name="action_mark_action_required" 
+                                string="Mark Action Required" 
+                                type="object"
+                                invisible="state != 'investigation'"/>
+                        <button name="action_resolve" 
+                                string="Mark Resolved" 
+                                type="object"
+                                invisible="state != 'action'"/>
+                        <button name="action_close" 
+                                string="Close" 
+                                type="object"
+                                invisible="state != 'resolved'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,reported,investigation,action,resolved,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="incident_date"/>
+                                <field name="reported_by_id"/>
+                                <field name="location"/>
+                                <field name="incident_type"/>
+                                <field name="severity"/>
+                            </group>
+                            <group>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="department_id"/>
+                                <field name="requires_investigation"/>
+                                <field name="insurance_claim_required"/>
+                                <field name="police_report_required"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" placeholder="Describe the incident in detail..."/>
+                            </page>
+                            <page string="Actions Taken">
+                                <field name="immediate_action" placeholder="Describe immediate actions taken..."/>
+                            </page>
+                            <page string="Witnesses">
+                                <field name="witnesses"/>
+                            </page>
+                            <page string="Investigations" invisible="not requires_investigation">
+                                <field name="investigation_ids"/>
+                            </page>
+                            <page string="Insurance Details" invisible="not insurance_claim_required">
+                                <group>
+                                    <field name="insurance_claim_id"/>
+                                    <field name="police_report_number" invisible="not police_report_required"/>
+                                </group>
+                            </page>
+                            <page string="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_incident_report_search" model="ir.ui.view">
+            <field name="name">incident.report.search</field>
+            <field name="model">incident.report</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Incident Reports">
+                    <field name="name"/>
+                    <field name="reported_by_id"/>
+                    <field name="location"/>
+                    <field name="department_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <filter string="My Reports" name="my_reports" domain="[('reported_by_id', '=', uid)]"/>
+                    <filter string="High Severity" name="high_severity" domain="[('severity', 'in', ['high', 'critical'])]"/>
+                    <filter string="Requires Investigation" name="investigation_required" domain="[('requires_investigation', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Reporter" name="reporter" context="{'group_by': 'reported_by_id'}"/>
+                        <filter string="Department" name="department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Company" name="company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                        <filter string="Status" name="status" context="{'group_by': 'state'}"/>
+                        <filter string="Incident Type" name="type" context="{'group_by': 'incident_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_incident_report" model="ir.actions.act_window">
+            <field name="name">Incident Reports</field>
+            <field name="res_model">incident.report</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_incident_report_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first incident report
+                </p>
+                <p>
+                    Record and track workplace incidents.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 

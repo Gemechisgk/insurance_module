@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View -->
+        <record id="view_office_inspection_tree" model="ir.ui.view">
+            <field name="name">office.inspection.list</field>
+            <field name="model">office.inspection</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list string="Office Inspections">
+                    <field name="name"/>
+                    <field name="inspection_date"/>
+                    <field name="inspector_id"/>
+                    <field name="department_id"/>
+                    <field name="location"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_office_inspection_form" model="ir.ui.view">
+            <field name="name">office.inspection.form</field>
+            <field name="model">office.inspection</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Office Inspection">
+                    <header>
+                        <button name="action_start_inspection" 
+                                string="Start Inspection" 
+                                type="object" 
+                                class="oe_highlight" 
+                                invisible="state != 'draft'"/>
+                        <button name="action_complete_inspection" 
+                                string="Complete" 
+                                type="object" 
+                                class="oe_highlight" 
+                                invisible="state != 'in_progress'"/>
+                        <button name="action_cancel_inspection" 
+                                string="Cancel" 
+                                type="object" 
+                                invisible="state not in ('draft', 'in_progress')"/>
+                        <button name="action_reset_to_draft" 
+                                string="Reset to Draft" 
+                                type="object" 
+                                invisible="state != 'cancelled'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="inspection_date"/>
+                                <field name="inspector_id"/>
+                                <field name="department_id"/>
+                                <field name="location"/>
+                            </group>
+                            <group>
+                                <field name="fire_safety_ok"/>
+                                <field name="emergency_exits_ok"/>
+                                <field name="first_aid_ok"/>
+                                <field name="electrical_safety_ok"/>
+                                <field name="workspace_safety_ok"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Notes">
+                                <group>
+                                    <field name="notes" nolabel="1" placeholder="Add inspection notes..."/>
+                                    <field name="recommendation" nolabel="1" placeholder="Add recommendations..."/>
+                                </group>
+                            </page>
+                            <page string="Corrective Actions">
+                                <field name="corrective_action_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="responsible_id"/>
+                                        <field name="deadline"/>
+                                        <field name="state"/>
+                                        <field name="notes"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_office_inspection_search" model="ir.ui.view">
+            <field name="name">office.inspection.search</field>
+            <field name="model">office.inspection</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Office Inspections">
+                    <field name="name"/>
+                    <field name="inspector_id"/>
+                    <field name="department_id"/>
+                    <field name="location"/>
+                    <filter string="My Inspections" name="my_inspections" domain="[('inspector_id', '=', uid)]"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Completed" name="done" domain="[('state', '=', 'done')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Inspector" name="inspector" context="{'group_by': 'inspector_id'}"/>
+                        <filter string="Department" name="department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Status" name="status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_office_inspection" model="ir.actions.act_window">
+            <field name="name">Office Inspections</field>
+            <field name="res_model">office.inspection</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_office_inspection_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first office inspection
+                </p>
+                <p>
+                    Track and manage office safety inspections.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 

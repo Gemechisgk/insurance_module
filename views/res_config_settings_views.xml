@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.insurance</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="90"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app string="Safety &amp; Insurance" name="insurance_module">
+                        <block title="Safety Management">
+                            <setting string="Inspection Reminders" help="Enable automatic reminders for inspections">
+                                <field name="module_auto_inspection_reminder"/>
+                            </setting>
+                            <setting string="Safety Dashboard" help="Enable safety dashboard with KPIs">
+                                <field name="module_safety_dashboard"/>
+                            </setting>
+                        </block>
+                        <block title="Insurance Management">
+                            <setting string="Claim Automation" help="Enable automated claim processing workflow">
+                                <field name="module_insurance_claim_automation"/>
+                            </setting>
+                            <setting string="Insurance Analytics" help="Enable insurance analytics and reporting">
+                                <field name="module_insurance_analytics"/>
+                            </setting>
+                        </block>
+                        <block title="Vehicle Safety">
+                            <setting string="Maintenance Reminders" help="Enable vehicle maintenance reminders">
+                                <field name="module_vehicle_maintenance_reminder"/>
+                            </setting>
+                        </block>
+                        <block title="Employee Safety">
+                            <setting string="Training Management" help="Enable safety training management">
+                                <field name="module_safety_training_management"/>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_insurance_config_settings" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'insurance_module'}</field>
+        </record>
+    </data>
+</odoo> 

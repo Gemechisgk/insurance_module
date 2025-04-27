@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View -->
+        <record id="view_fire_extinguisher_tree" model="ir.ui.view">
+            <field name="name">fire.extinguisher.list</field>
+            <field name="model">fire.extinguisher</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list string="Fire Extinguishers">
+                    <field name="name"/>
+                    <field name="location"/>
+                    <field name="type"/>
+                    <field name="last_inspection_date"/>
+                    <field name="next_inspection_date"/>
+                    <field name="expiry_date"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_fire_extinguisher_form" model="ir.ui.view">
+            <field name="name">fire.extinguisher.form</field>
+            <field name="model">fire.extinguisher</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Fire Extinguisher">
+                    <header>
+                        <button name="action_set_maintenance" 
+                                string="Set to Maintenance" 
+                                type="object" 
+                                invisible="state == 'maintenance'"/>
+                        <button name="action_set_active" 
+                                string="Set Active" 
+                                type="object" 
+                                invisible="state == 'active'"/>
+                        <button name="action_set_expired" 
+                                string="Set Expired" 
+                                type="object" 
+                                invisible="state == 'expired'"/>
+                        <button name="action_set_replaced" 
+                                string="Mark as Replaced" 
+                                type="object" 
+                                invisible="state == 'replaced'"/>
+                        <button name="action_schedule_maintenance" 
+                                string="Schedule Maintenance" 
+                                type="object" 
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="active,maintenance,expired,replaced"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Serial Number"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="location"/>
+                                <field name="building"/>
+                                <field name="floor"/>
+                                <field name="type"/>
+                                <field name="capacity"/>
+                            </group>
+                            <group>
+                                <field name="manufacture_date"/>
+                                <field name="installation_date"/>
+                                <field name="expiry_date"/>
+                                <field name="last_inspection_date"/>
+                                <field name="next_inspection_date"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Maintenance History">
+                                <field name="maintenance_history_ids">
+                                    <list editable="bottom">
+                                        <field name="maintenance_date"/>
+                                        <field name="technician_id"/>
+                                        <field name="maintenance_type"/>
+                                        <field name="pressure_check"/>
+                                        <field name="nozzle_check"/>
+                                        <field name="seal_check"/>
+                                        <field name="weight_check"/>
+                                        <field name="notes"/>
+                                        <field name="next_maintenance_date"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes" placeholder="Add any additional notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_fire_extinguisher_search" model="ir.ui.view">
+            <field name="name">fire.extinguisher.search</field>
+            <field name="model">fire.extinguisher</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Fire Extinguishers">
+                    <field name="name"/>
+                    <field name="location"/>
+                    <field name="building"/>
+                    <field name="type"/>
+                    <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                    <filter string="Under Maintenance" name="maintenance" domain="[('state', '=', 'maintenance')]"/>
+                    <filter string="Expired" name="expired" domain="[('state', '=', 'expired')]"/>
+                    <filter string="Replaced" name="replaced" domain="[('state', '=', 'replaced')]"/>
+                    <separator/>
+                    <filter string="Needs Inspection" name="needs_inspection" 
+                            domain="[('next_inspection_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Location" name="location" context="{'group_by': 'location'}"/>
+                        <filter string="Building" name="building" context="{'group_by': 'building'}"/>
+                        <filter string="Type" name="type" context="{'group_by': 'type'}"/>
+                        <filter string="Status" name="status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_fire_extinguisher" model="ir.actions.act_window">
+            <field name="name">Fire Extinguishers</field>
+            <field name="res_model">fire.extinguisher</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_fire_extinguisher_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Register your first fire extinguisher
+                </p>
+                <p>
+                    Track and manage fire extinguishers in your facility.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 

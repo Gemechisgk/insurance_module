@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Record Rules -->
+        <!-- Insurance Claim Rules -->
+        <record id="insurance_claim_comp_rule" model="ir.rule">
+            <field name="name">Insurance Claim: Multi-Company Rule</field>
+            <field name="model_id" ref="model_insurance_claim"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Incident Report Rules -->
+        <record id="incident_report_comp_rule" model="ir.rule">
+            <field name="name">Incident Report: Multi-Company Rule</field>
+            <field name="model_id" ref="model_incident_report"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Office Inspection Rules -->
+        <record id="office_inspection_comp_rule" model="ir.rule">
+            <field name="name">Office Inspection: Multi-Company Rule</field>
+            <field name="model_id" ref="model_office_inspection"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Vehicle Inspection Rules -->
+        <record id="vehicle_inspection_comp_rule" model="ir.rule">
+            <field name="name">Vehicle Inspection: Multi-Company Rule</field>
+            <field name="model_id" ref="model_vehicle_inspection"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Employee Suggestion Rules -->
+        <record id="employee_suggestion_comp_rule" model="ir.rule">
+            <field name="name">Employee Suggestion: Multi-Company Rule</field>
+            <field name="model_id" ref="model_employee_suggestion"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Accident Investigation Rules -->
+        <record id="accident_investigation_comp_rule" model="ir.rule">
+            <field name="name">Accident Investigation: Multi-Company Rule</field>
+            <field name="model_id" ref="model_accident_investigation"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Vehicle Inspection Maintenance Rules -->
+        <record id="vehicle_inspection_maintenance_comp_rule" model="ir.rule">
+            <field name="name">Vehicle Inspection Maintenance: Multi-Company Rule</field>
+            <field name="model_id" ref="model_vehicle_inspection_maintenance"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Insurance Type Rules -->
+        <record id="insurance_type_comp_rule" model="ir.rule">
+            <field name="name">Insurance Type: Multi-Company Rule</field>
+            <field name="model_id" ref="model_insurance_type"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Fire Extinguisher Rules -->
+        <record id="fire_extinguisher_comp_rule" model="ir.rule">
+            <field name="name">Fire Extinguisher: Multi-Company Rule</field>
+            <field name="model_id" ref="model_fire_extinguisher"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Fire Extinguisher Maintenance Rules -->
+        <record id="fire_extinguisher_maintenance_comp_rule" model="ir.rule">
+            <field name="name">Fire Extinguisher Maintenance: Multi-Company Rule</field>
+            <field name="model_id" ref="model_fire_extinguisher_maintenance"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+
+        <!-- Office Inspection Action Rules -->
+        <record id="office_inspection_action_comp_rule" model="ir.rule">
+            <field name="name">Office Inspection Action: Multi-Company Rule</field>
+            <field name="model_id" ref="model_office_inspection_action"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+            <field name="global" eval="True"/>
+        </record>
+    </data>
+</odoo> 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View -->
+        <record id="view_insurance_type_tree" model="ir.ui.view">
+            <field name="name">insurance.type.list</field>
+            <field name="model">insurance.type</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list string="Insurance Types">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_insurance_type_form" model="ir.ui.view">
+            <field name="name">insurance.type.form</field>
+            <field name="model">insurance.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Insurance Type">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Insurance Type Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_insurance_type_search" model="ir.ui.view">
+            <field name="name">insurance.type.search</field>
+            <field name="model">insurance.type</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Insurance Types">
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="insurance_module.action_insurance_type" model="ir.actions.act_window">
+            <field name="name">Insurance Types</field>
+            <field name="res_model">insurance.type</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_insurance_type_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first insurance type
+                </p>
+                <p>
+                    Define different types of insurance policies that can be claimed.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 
