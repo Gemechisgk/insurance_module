@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Insurance Claim Report Template -->
+        <template id="report_insurance_claim">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>Insurance Claim Report</h2>
+                            <div class="row mt32 mb32">
+                                <div class="col-6">
+                                    <strong>Claim Number:</strong>
+                                    <span t-field="doc.name"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Claim Date:</strong>
+                                    <span t-field="doc.claim_date"/>
+                                </div>
+                            </div>
+                            <div class="row mt32 mb32">
+                                <div class="col-12">
+                                    <strong>Description:</strong>
+                                    <p t-field="doc.description"/>
+                                </div>
+                            </div>
+                            <div class="row mt32 mb32">
+                                <div class="col-12">
+                                    <strong>Status:</strong>
+                                    <span t-field="doc.state"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!-- Accident Investigation Report Template -->
+        <template id="report_accident_investigation">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <style>
+                                .page {
+                                    width: 100%;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                .table {
+                                    width: 100%;
+                                    table-layout: fixed;
+                                }
+                                .table td {
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                    white-space: normal;
+                                }
+                                .text-wrap {
+                                    white-space: normal;
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                }
+                                .injury-grid {
+                                    display: grid;
+                                    grid-template-columns: repeat(2, 1fr);
+                                    gap: 10px;
+                                }
+                                .injury-item {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 5px;
+                                }
+                                .mt8 {
+                                    margin-top: 8px;
+                                }
+                                .mb8 {
+                                    margin-bottom: 8px;
+                                }
+                            </style>
+
+                            <h2>Accident Investigation Report</h2>
+                            <div class="row mt8 mb8">
+                                <div class="col-6">
+                                    <strong>Investigation Date:</strong>
+                                    <span t-field="doc.investigation_date"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Location:</strong>
+                                    <span t-field="doc.incident_id.location"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Injury Details</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_abrasion">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Abrasion, scrapes
+                                                </div>
+                                            </td>
+                                            <td width="50%">
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_amputation">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Amputation
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_broken_bone">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Broken bone
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_bruise">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Bruise
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_burn_heat">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Burn (heat)
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_burn_chemical">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Burn (chemical)
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_concussion">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Concussion (to the head)
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_crushing">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Crushing Injury
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_cut">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Cut, laceration, puncture
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_hernia">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Hernia
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_illness">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Illness
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.injury_sprain">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Sprain, strain
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Unsafe Workplace Conditions</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_inadequate_guard">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Inadequate guard
+                                                </div>
+                                            </td>
+                                            <td width="50%">
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_unguarded_hazard">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Unguarded hazard
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_defective_safety_device">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Safety device is defective
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_defective_tool">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Tool or equipment defective
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_workspace_layout">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Workstation layout is hazardous
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_lighting">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Unsafe lighting
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_ventilation">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Unsafe ventilation
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_no_ppe">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Lack of needed personal protective equipment
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_no_equipment">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Lack of appropriate equipment / tools
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_clothing">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Unsafe clothing
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_no_training">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    No training or insufficient training
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_other">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Other
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="row mt8" t-if="doc.unsafe_other">
+                                        <div class="col-12">
+                                            <strong>Other unsafe workplace condition description:</strong>
+                                            <p class="text-wrap" t-field="doc.unsafe_other_description"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Unsafe Acts by People</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_no_permission">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Operating without permission
+                                                </div>
+                                            </td>
+                                            <td width="50%">
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_speed">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Operating at unsafe speed
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_powered_equipment">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Servicing equipment that has power to it
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_disabled_safety">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Making a safety device inoperative
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_defective_use">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Using defective equipment
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_improper_use">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Using equipment in an unapproved way
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_lifting">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Unsafe lifting
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_posture">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Taking an unsafe position or posture
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_distraction">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Distraction, teasing, horseplay
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_no_ppe_use">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Failure to wear personal protective equipment
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_no_tool_use">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Failure to use the available equipment / tools
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.unsafe_other_act">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Other
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="row mt8" t-if="doc.unsafe_other_act">
+                                        <div class="col-12">
+                                            <strong>Other unsafe act description:</strong>
+                                            <p class="text-wrap" t-field="doc.unsafe_other_act_description"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <strong>Description:</strong>
+                                    <p class="text-wrap" t-field="doc.incident_description"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Investigation Findings</h4>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <strong>Immediate Causes:</strong>
+                                            <p class="text-wrap" t-field="doc.immediate_causes"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt8">
+                                        <div class="col-12">
+                                            <strong>Underlying Causes:</strong>
+                                            <p class="text-wrap" t-field="doc.underlying_causes"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt8">
+                                        <div class="col-12">
+                                            <strong>Basic Causes:</strong>
+                                            <p class="text-wrap" t-field="doc.basic_causes"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt15 mb8">
+                                <div class="col-12">
+                                    <h4>Recommendations</h4>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <strong>Recommendations:</strong>
+                                            <p class="text-wrap" t-field="doc.recommendations"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt8">
+                                        <div class="col-12">
+                                            <strong>Preventive Measures:</strong>
+                                            <p class="text-wrap" t-field="doc.preventive_measures"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!-- Incident Report Template -->
+        <template id="report_incident">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <style>
+                                .page {
+                                    width: 100%;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                .text-wrap {
+                                    white-space: normal;
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                }
+                                .mt8 {
+                                    margin-top: 8px;
+                                }
+                                .mb8 {
+                                    margin-bottom: 8px;
+                                }
+                                .table {
+                                    width: 100%;
+                                    table-layout: fixed;
+                                }
+                                .table td {
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                    white-space: normal;
+                                }
+                            </style>
+
+                            <h2>Incident Report</h2>
+                            <div class="row mt8 mb8">
+                                <div class="col-6">
+                                    <strong>Reference:</strong>
+                                    <span t-field="doc.name"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Incident Type:</strong>
+                                    <span t-field="doc.incident_type"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Section 1 - Personal/Employment Details</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Employee:</strong>
+                                                <span t-field="doc.employee_id"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Employee ID:</strong>
+                                                <span t-field="doc.employee_id_number"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Address:</strong>
+                                                <span t-field="doc.address"/>
+                                            </td>
+                                            <td>
+                                                <strong>Postcode:</strong>
+                                                <span t-field="doc.postcode"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Date of Birth:</strong>
+                                                <span t-field="doc.date_of_birth"/>
+                                            </td>
+                                            <td>
+                                                <strong>Gender:</strong>
+                                                <span t-field="doc.gender"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Occupation:</strong>
+                                                <span t-field="doc.occupation"/>
+                                            </td>
+                                            <td>
+                                                <strong>Time in this Job:</strong>
+                                                <span t-field="doc.time_in_job"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Department:</strong>
+                                                <span t-field="doc.department_id"/>
+                                            </td>
+                                            <td>
+                                                <strong>Supervisor/Line Manager:</strong>
+                                                <span t-field="doc.supervisor_id"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Employment Status:</strong>
+                                                <span t-field="doc.employment_status"/>
+                                            </td>
+                                            <td t-if="doc.employment_status == 'contractual'">
+                                                <strong>Employer Name:</strong>
+                                                <span t-field="doc.employer_name"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Section 2 - Occurrence of the Incident</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Date of Incident:</strong>
+                                                <span t-field="doc.incident_date"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Time of Incident:</strong>
+                                                <span t-field="doc.incident_time"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Date Reported:</strong>
+                                                <span t-field="doc.report_date"/>
+                                            </td>
+                                            <td>
+                                                <strong>Location:</strong>
+                                                <span t-field="doc.location"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <strong>Work Activity being performed:</strong>
+                                                <p class="text-wrap" t-field="doc.work_activity"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <strong>Incident Description:</strong>
+                                                <p class="text-wrap" t-field="doc.description"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <strong>Witnesses:</strong>
+                                                <p class="text-wrap" t-field="doc.witnesses"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8" t-if="doc.incident_type == 'injury'">
+                                <div class="col-12">
+                                    <h4>Section 3 - Type of Injury</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Injury Types:</strong>
+                                                <div class="injury-grid">
+                                                    <div class="injury-item">
+                                                        <span t-if="doc.injury_strain_sprain">[✓]</span>
+                                                        <span t-else="">[ ]</span>
+                                                        Strains/Sprains
+                                                    </div>
+                                                    <div class="injury-item">
+                                                        <span t-if="doc.injury_amputation">[✓]</span>
+                                                        <span t-else="">[ ]</span>
+                                                        Amputation
+                                                    </div>
+                                                    <!-- Add all other injury types -->
+                                                </div>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Body Part Injured:</strong>
+                                                <div class="injury-grid">
+                                                    <div class="injury-item">
+                                                        <span t-if="doc.body_part_chest">[✓]</span>
+                                                        <span t-else="">[ ]</span>
+                                                        Chest
+                                                    </div>
+                                                    <div class="injury-item">
+                                                        <span t-if="doc.body_part_abdomen">[✓]</span>
+                                                        <span t-else="">[ ]</span>
+                                                        Abdomen
+                                                    </div>
+                                                    <!-- Add all other body parts -->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <strong>Side:</strong>
+                                                <span t-field="doc.body_side"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8" t-if="doc.incident_type == 'property_damage'">
+                                <div class="col-12">
+                                    <h4>Section 4 - Property Damage</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td>
+                                                <strong>Description of damage:</strong>
+                                                <p class="text-wrap" t-field="doc.property_damage_description"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8" t-if="doc.incident_type == 'injury'">
+                                <div class="col-12">
+                                    <h4>Section 5 - Treatment</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Treatment Required:</strong>
+                                                <span t-field="doc.treatment_required"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>First Aid Attendant:</strong>
+                                                <span t-field="doc.first_aid_attendant"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <strong>First Aid Treatment Given:</strong>
+                                                <p class="text-wrap" t-field="doc.first_aid_treatment"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8" t-if="doc.incident_type == 'injury'">
+                                <div class="col-12">
+                                    <h4>Section 6 - Work Status</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Work Status:</strong>
+                                                <span t-field="doc.work_status"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Miss Shift:</strong>
+                                                <span t-if="doc.miss_shift">Yes</span>
+                                                <span t-else="">No</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8" t-if="doc.insurance_claim_required">
+                                <div class="col-12">
+                                    <h4>Insurance Details</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Insurance Claim:</strong>
+                                                <span t-field="doc.insurance_claim_id"/>
+                                            </td>
+                                            <td width="50%" t-if="doc.police_report_required">
+                                                <strong>Police Report Number:</strong>
+                                                <span t-field="doc.police_report_number"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!-- Office Inspection Report Template -->
+        <template id="report_office_inspection">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <style>
+                                .page {
+                                    width: 100%;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                .text-wrap {
+                                    white-space: normal;
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                }
+                                .mt8 {
+                                    margin-top: 8px;
+                                }
+                                .mb8 {
+                                    margin-bottom: 8px;
+                                }
+                            </style>
+
+                            <h2>Office Inspection Report</h2>
+                            <div class="row mt8 mb8">
+                                <div class="col-6">
+                                    <strong>Inspection Date:</strong>
+                                    <span t-field="doc.inspection_date"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Reference:</strong>
+                                    <span t-field="doc.name"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Inspection Details</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Safety Officer:</strong>
+                                                <span t-field="doc.inspector_id"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Department:</strong>
+                                                <span t-field="doc.department_id"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <strong>Location:</strong>
+                                                <span t-field="doc.location"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Safety Checks</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <div class="injury-item">
+                                                    <span t-if="doc.fire_safety_ok">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Fire Safety Equipment
+                                                </div>
+                                            </td>
+                                            <td width="50%">
+                                                <div class="injury-item">
+                                                    <span t-if="doc.emergency_exits_ok">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Emergency Exits
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.first_aid_ok">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    First Aid Kits
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.electrical_safety_ok">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Electrical Safety
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.workspace_safety_ok">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Workspace Safety
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.housekeeping_ok">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Housekeeping
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.electrical_hazards_ok">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Electrical Hazards
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="injury-item">
+                                                    <span t-if="doc.confined_space_ok">[✓]</span>
+                                                    <span t-else="">[ ]</span>
+                                                    Confined Space
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <strong>Inspection Notes:</strong>
+                                    <p class="text-wrap" t-field="doc.notes"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <strong>Recommendations:</strong>
+                                    <p class="text-wrap" t-field="doc.recommendation"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!-- Fire Extinguisher Report Template -->
+        <template id="report_fire_extinguisher">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <style>
+                                .page {
+                                    width: 100%;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                .text-wrap {
+                                    white-space: normal;
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                }
+                                .mt8 {
+                                    margin-top: 8px;
+                                }
+                                .mb8 {
+                                    margin-bottom: 8px;
+                                }
+                            </style>
+
+                            <h2>Fire Extinguisher Report</h2>
+                            <div class="row mt8 mb8">
+                                <div class="col-6">
+                                    <strong>Inspection Date:</strong>
+                                    <span t-field="doc.inspection_date"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Location:</strong>
+                                    <span t-field="doc.location"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Status</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Condition:</strong>
+                                                <span t-field="doc.status"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Last Service Date:</strong>
+                                                <span t-field="doc.last_service_date"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <strong>Notes:</strong>
+                                    <p class="text-wrap" t-field="doc.notes"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo> 

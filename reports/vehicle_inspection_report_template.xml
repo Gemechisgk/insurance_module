@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vehicle Inspection Report Template -->
+        <template id="report_vehicle_inspection">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <style>
+                                .page {
+                                    width: 100%;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                .table {
+                                    width: 100%;
+                                    table-layout: fixed;
+                                }
+                                .table td {
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                    white-space: normal;
+                                }
+                                .text-wrap {
+                                    white-space: normal;
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                }
+                                .status-cell {
+                                    width: 25%;
+                                }
+                                .content-cell {
+                                    width: 75%;
+                                }
+                                .small-text {
+                                    font-size: 0.9em;
+                                }
+                                .mt8 {
+                                    margin-top: 8px;
+                                }
+                                .mb8 {
+                                    margin-bottom: 8px;
+                                }
+                            </style>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3>Practical Activity</h3>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <h3>Preventive Maintenance Service</h3>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt8 mb8">
+                                <div class="col-6">
+                                    <strong>Name of Inspector:</strong>
+                                    <span t-field="doc.inspector_id"/>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <strong>Date:</strong>
+                                    <span t-field="doc.inspection_date"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Vehicle Information</h4>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <strong>Model:</strong>
+                                            <span t-field="doc.vehicle_id.model_id"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <strong>Plate No:</strong>
+                                            <span t-field="doc.vehicle_id.license_plate"/>
+                                        </div>
+                                        <div class="col-4">
+                                            <strong>Mileage:</strong>
+                                            <span t-field="doc.mileage"/> Km/Hr
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <p class="small-text text-wrap"><strong>Instructions:</strong> ENGINE OFF and KEY on ACC position – Inspect/Check each item thoroughly and carefully. Place a check mark on the box that will identify the condition of each item.</p>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Inside the Vehicle</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td class="status-cell"><strong>1. Service Brake System</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                <span t-if="doc.service_brake_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.service_brake_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="status-cell"><strong>2. Parking Brake System</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                <span t-if="doc.parking_brake_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.parking_brake_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="status-cell"><strong>3. Door Locks</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                Front Left: 
+                                                <span t-if="doc.door_front_left_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.door_front_left_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                                <br/>
+                                                Front Right: 
+                                                <span t-if="doc.door_front_right_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.door_front_right_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="status-cell"><strong>4. Seat Belts</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                Front Left: 
+                                                <span t-if="doc.seat_belt_front_left_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.seat_belt_front_left_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                                <br/>
+                                                Front Right: 
+                                                <span t-if="doc.seat_belt_front_right_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.seat_belt_front_right_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="status-cell"><strong>5. Center Rear View Mirror</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                <span t-if="doc.rear_view_mirror_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.rear_view_mirror_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Outside the Vehicle</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td class="status-cell"><strong>6. Lighting System</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                Headlight (R): 
+                                                <span t-if="doc.headlight_r_high_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.headlight_r_high_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="status-cell"><strong>7. Side Mirrors</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                Left: 
+                                                <span t-if="doc.side_mirror_left_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.side_mirror_left_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                                <br/>
+                                                Right: 
+                                                <span t-if="doc.side_mirror_right_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.side_mirror_right_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="status-cell"><strong>8. Wind Shield</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                Left: 
+                                                <span t-if="doc.windshield_left_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.windshield_left_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                                <br/>
+                                                Right: 
+                                                <span t-if="doc.windshield_right_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.windshield_right_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <p class="small-text text-wrap"><strong>Instructions:</strong> ENGINE ON – Start the engine and check each item thoroughly and carefully. Place a check mark on the box that will identify the condition of each item.</p>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Engine On Checks</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td class="status-cell"><strong>1. Wiper</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                Left: 
+                                                <span t-if="doc.wiper_left_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.wiper_left_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                                <br/>
+                                                Right: 
+                                                <span t-if="doc.wiper_right_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.wiper_right_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="status-cell"><strong>2. Dashboard</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                Warning Lamps: 
+                                                <span t-if="doc.warning_lamps_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.warning_lamps_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                                <br/>
+                                                Gauges: 
+                                                <span t-if="doc.gauges_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.gauges_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="status-cell"><strong>3. Safety Equipment</strong></td>
+                                            <td class="content-cell text-wrap">
+                                                Fire Extinguisher: 
+                                                <span t-if="doc.fire_extinguisher_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.fire_extinguisher_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                                <br/>
+                                                First Aid Kit: 
+                                                <span t-if="doc.first_aid_kit_status == 'ok'">[✓]</span>
+                                                <span t-else="">[ ]</span> ok
+                                                <span t-if="doc.first_aid_kit_status == 'defective'">[✓]</span>
+                                                <span t-else="">[ ]</span> Defective
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Inspection Results</h4>
+                                    <p class="text-wrap" t-field="doc.findings"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Recommendations</h4>
+                                    <p class="text-wrap" t-field="doc.recommendations"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo> 

@@ -31,6 +31,9 @@ class OfficeInspection(models.Model):
     first_aid_ok = fields.Boolean(string='First Aid Kits')
     electrical_safety_ok = fields.Boolean(string='Electrical Safety')
     workspace_safety_ok = fields.Boolean(string='Workspace Safety')
+    housekeeping_ok = fields.Boolean(string='Housekeeping')
+    electrical_hazards_ok = fields.Boolean(string='Electrical Hazards')
+    confined_space_ok = fields.Boolean(string='Confined Space')
     
     notes = fields.Text(string='Inspection Notes')
     recommendation = fields.Text(string='Recommendations')

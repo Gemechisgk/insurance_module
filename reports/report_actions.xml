@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Vehicle Inspection Report Action -->
+        <record id="action_report_vehicle_inspection" model="ir.actions.report">
+            <field name="name">Vehicle Inspection Report</field>
+            <field name="model">vehicle.inspection</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">insurance_module.report_vehicle_inspection</field>
+            <field name="report_file">insurance_module.report_vehicle_inspection</field>
+            <field name="print_report_name">'Vehicle Inspection Report - %s' % (object.name)</field>
+            <field name="attachment_use">True</field>
+            <field name="attachment">'Vehicle Inspection Report - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_vehicle_inspection"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Insurance Claim Report Action -->
+        <record id="action_report_insurance_claim" model="ir.actions.report">
+            <field name="name">Insurance Claim Report</field>
+            <field name="model">insurance.claim</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">insurance_module.report_insurance_claim</field>
+            <field name="report_file">insurance_module.report_insurance_claim</field>
+            <field name="print_report_name">'Insurance Claim Report - %s' % (object.name)</field>
+            <field name="attachment">'Insurance Claim Report - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_insurance_claim"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Accident Investigation Report Action -->
+        <record id="action_report_accident_investigation" model="ir.actions.report">
+            <field name="name">Accident Investigation Report</field>
+            <field name="model">accident.investigation</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">insurance_module.report_accident_investigation</field>
+            <field name="report_file">insurance_module.report_accident_investigation</field>
+            <field name="print_report_name">'Accident Investigation Report - %s' % (object.name)</field>
+            <field name="attachment">'Accident Investigation Report - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_accident_investigation"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Incident Report Action -->
+        <record id="action_report_incident" model="ir.actions.report">
+            <field name="name">Incident Report</field>
+            <field name="model">incident.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">insurance_module.report_incident</field>
+            <field name="report_file">insurance_module.report_incident</field>
+            <field name="print_report_name">'Incident Report - %s' % (object.name)</field>
+            <field name="attachment">'Incident Report - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_incident_report"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Office Inspection Report Action -->
+        <record id="action_report_office_inspection" model="ir.actions.report">
+            <field name="name">Office Inspection Report</field>
+            <field name="model">office.inspection</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">insurance_module.report_office_inspection</field>
+            <field name="report_file">insurance_module.report_office_inspection</field>
+            <field name="print_report_name">'Office Inspection Report - %s' % (object.name)</field>
+            <field name="attachment">'Office Inspection Report - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_office_inspection"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Fire Extinguisher Report Action -->
+        <record id="action_report_fire_extinguisher" model="ir.actions.report">
+            <field name="name">Fire Extinguisher Report</field>
+            <field name="model">fire.extinguisher</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">insurance_module.report_fire_extinguisher</field>
+            <field name="report_file">insurance_module.report_fire_extinguisher</field>
+            <field name="print_report_name">'Fire Extinguisher Report - %s' % (object.name)</field>
+            <field name="attachment">'Fire Extinguisher Report - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_fire_extinguisher"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo> 

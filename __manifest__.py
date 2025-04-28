@@ -45,6 +45,9 @@
         'views/res_config_settings_views.xml',
         # Menu last (after all views and actions are loaded)
         'views/menu_views.xml',
+        'reports/report_templates.xml',
+        'reports/vehicle_inspection_report_template.xml',
+        'reports/report_actions.xml',
     ],
     'demo': [],
     'installable': True,

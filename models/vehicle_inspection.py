@@ -4,107 +4,187 @@ from datetime import datetime, timedelta
 
 class VehicleInspection(models.Model):
     _name = 'vehicle.inspection'
-    _description = 'Vehicle Safety Inspection'
+    _description = 'Vehicle Inspection'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'inspection_date desc'
 
-    name = fields.Char(string='Reference', required=True, copy=False, readonly=True,
-                      default=lambda self: _('New'))
-    company_id = fields.Many2one('res.company', string='Company', required=True,
-                                default=lambda self: self.env.company)
-    vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', required=True,
-                               tracking=True)
-    inspection_date = fields.Date(string='Inspection Date', required=True,
-                                default=fields.Date.context_today)
-    inspector_id = fields.Many2one('res.users', string='Inspector',
-                                 default=lambda self: self.env.user, required=True)
-    odometer = fields.Float(string='Odometer Reading', required=True)
-    next_inspection_date = fields.Date(string='Next Inspection Due',
-                                     compute='_compute_next_inspection_date', store=True)
-    
-    # Vehicle Information
-    license_plate = fields.Char(related='vehicle_id.license_plate', string='License Plate',
-                              readonly=True)
-    vin_sn = fields.Char(related='vehicle_id.vin_sn', string='Chassis Number',
-                        readonly=True)
-    model_id = fields.Many2one(related='vehicle_id.model_id', string='Model',
-                              readonly=True)
-    
-    # Inspection Checklist - Exterior
-    body_condition = fields.Selection([
-        ('good', 'Good'),
-        ('fair', 'Fair'),
-        ('poor', 'Poor')
-    ], string='Body Condition', required=True)
-    windshield_condition = fields.Selection([
-        ('good', 'Good'),
-        ('cracked', 'Cracked'),
-        ('damaged', 'Damaged')
-    ], string='Windshield Condition', required=True)
-    tire_condition = fields.Selection([
-        ('good', 'Good'),
-        ('fair', 'Fair'),
-        ('poor', 'Poor')
-    ], string='Tire Condition', required=True)
-    light_signals = fields.Boolean(string='Lights & Signals Working')
-    
-    # Inspection Checklist - Interior
-    seat_belts = fields.Boolean(string='Seat Belts Working')
-    mirrors = fields.Boolean(string='Mirrors in Good Condition')
-    dashboard_lights = fields.Boolean(string='Dashboard Lights Working')
-    horn = fields.Boolean(string='Horn Working')
-    ac_heating = fields.Boolean(string='AC/Heating Working')
-    
-    # Inspection Checklist - Mechanical
-    engine_condition = fields.Selection([
-        ('good', 'Good'),
-        ('fair', 'Fair'),
-        ('poor', 'Poor')
-    ], string='Engine Condition', required=True)
-    brake_condition = fields.Selection([
-        ('good', 'Good'),
-        ('fair', 'Fair'),
-        ('poor', 'Poor')
-    ], string='Brake Condition', required=True)
-    transmission = fields.Boolean(string='Transmission Working')
-    steering = fields.Boolean(string='Steering System Working')
-    exhaust = fields.Boolean(string='Exhaust System OK')
-    
-    # Safety Equipment
-    first_aid_kit = fields.Boolean(string='First Aid Kit Present')
-    fire_extinguisher = fields.Boolean(string='Fire Extinguisher Present')
-    warning_triangle = fields.Boolean(string='Warning Triangle Present')
-    spare_tire = fields.Boolean(string='Spare Tire Present')
-    
-    # Additional Information
-    notes = fields.Text(string='Inspection Notes')
-    recommendations = fields.Text(string='Recommendations')
-    
+    name = fields.Char(string='Inspection Reference', required=True, copy=False, readonly=True, default=lambda self: ('New'))
+    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+    vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', required=True, tracking=True)
+    inspection_date = fields.Date(string='Inspection Date', default=fields.Date.context_today, tracking=True)
+    inspector_id = fields.Many2one('res.users', string='Inspector', default=lambda self: self.env.user, tracking=True)
+    mileage = fields.Float(string='Mileage (Km/Hr)', tracking=True)
+
+    # Service Brake System
+    service_brake_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Service Brake Status', tracking=True)
+
+    # Parking Brake System
+    parking_brake_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Parking Brake Status', tracking=True)
+
+    # Door Locks
+    door_front_left_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Front Left Door Status', tracking=True)
+    door_front_right_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Front Right Door Status', tracking=True)
+    door_rear_left_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Rear Left Door Status', tracking=True)
+    door_rear_right_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Rear Right Door Status', tracking=True)
+    door_hatch_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Hatch Back Status', tracking=True)
+
+    # Seat Belts
+    seat_belt_front_left_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Front Left Seat Belt Status', tracking=True)
+    seat_belt_front_right_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Front Right Seat Belt Status', tracking=True)
+
+    # Center Rear View Mirror
+    rear_view_mirror_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Rear View Mirror Status', tracking=True)
+
+    # Lighting System
+    headlight_r_high_status = fields.Selection([
+        ('ok', 'OK'),
+        ('fade', 'Fade-out'),
+        ('defective', 'Defective')
+    ], string='Right Headlight High Beam Status', tracking=True)
+    headlight_r_low_status = fields.Selection([
+        ('ok', 'OK'),
+        ('fade', 'Fade-out'),
+        ('defective', 'Defective')
+    ], string='Right Headlight Low Beam Status', tracking=True)
+    headlight_l_high_status = fields.Selection([
+        ('ok', 'OK'),
+        ('fade', 'Fade-out'),
+        ('defective', 'Defective')
+    ], string='Left Headlight High Beam Status', tracking=True)
+    headlight_l_low_status = fields.Selection([
+        ('ok', 'OK'),
+        ('fade', 'Fade-out'),
+        ('defective', 'Defective')
+    ], string='Left Headlight Low Beam Status', tracking=True)
+
+    # Side Mirrors
+    side_mirror_left_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Left Side Mirror Status', tracking=True)
+    side_mirror_right_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Right Side Mirror Status', tracking=True)
+
+    # Wind Shield
+    windshield_left_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Left Windshield Status', tracking=True)
+    windshield_right_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Right Windshield Status', tracking=True)
+
+    # Wiper
+    wiper_left_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Left Wiper Status', tracking=True)
+    wiper_right_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective'),
+        ('missing', 'Missing')
+    ], string='Right Wiper Status', tracking=True)
+
+    # Dashboard
+    warning_lamps_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Warning Lamps Status', tracking=True)
+    gauges_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Gauges Status', tracking=True)
+    mileage_info_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Mileage Info Status', tracking=True)
+    fire_extinguisher_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='Fire Extinguisher Status', tracking=True)
+    first_aid_kit_status = fields.Selection([
+        ('ok', 'OK'),
+        ('defective', 'Defective')
+    ], string='First Aid Kit Status', tracking=True)
+
+    findings = fields.Text(string='Inspection Results', tracking=True)
+    recommendations = fields.Text(string='Recommendations', tracking=True)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('in_progress', 'In Progress'),
-        ('failed', 'Failed'),
-        ('passed', 'Passed'),
-        ('maintenance', 'Needs Maintenance')
+        ('done', 'Done'),
+        ('cancelled', 'Cancelled')
     ], string='Status', default='draft', tracking=True)
-    
-    maintenance_ids = fields.One2many('vehicle.inspection.maintenance', 'inspection_id',
-                                    string='Maintenance Items')
+
+    maintenance_ids = fields.One2many('vehicle.inspection.maintenance', 'inspection_id', string='Maintenance Items')
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
-    
+
     @api.depends('inspection_date')
     def _compute_next_inspection_date(self):
         for record in self:
             if record.inspection_date:
                 record.next_inspection_date = fields.Date.from_string(record.inspection_date) + timedelta(days=90)
-    
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('name', _('New')) == _('New'):
-                vals['name'] = self.env['ir.sequence'].next_by_code('vehicle.inspection') or _('New')
-        return super(VehicleInspection, self).create(vals_list)
-    
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code('vehicle.inspection') or 'New'
+        return super().create(vals_list)
+
+    def action_draft(self):
+        self.write({'state': 'draft'})
+
+    def action_in_progress(self):
+        self.write({'state': 'in_progress'})
+
+    def action_done(self):
+        self.write({'state': 'done'})
+
+    def action_cancel(self):
+        self.write({'state': 'cancelled'})
+
     def action_start_inspection(self):
         # Create a default maintenance record if none exists
         if not self.maintenance_ids:
@@ -116,10 +196,10 @@ class VehicleInspection(models.Model):
                 'state': 'draft'
             })
         self.write({'state': 'in_progress'})
-    
+
     def action_mark_failed(self):
         self.write({'state': 'failed'})
-    
+
     def action_mark_passed(self):
         required_checks = [
             self.light_signals, self.seat_belts, self.mirrors, self.horn,
@@ -128,10 +208,10 @@ class VehicleInspection(models.Model):
         if not all(required_checks):
             raise ValidationError(_('All safety-critical checks must pass before marking inspection as passed.'))
         self.write({'state': 'passed'})
-    
+
     def action_needs_maintenance(self):
         self.write({'state': 'maintenance'})
-    
+
     def action_schedule_maintenance(self):
         return {
             'name': _('Schedule Maintenance'),
@@ -145,15 +225,16 @@ class VehicleInspection(models.Model):
             }
         }
 
+    def print_report(self):
+        return self.env.ref('insurance_module.action_report_vehicle_inspection').report_action(self)
+
 class VehicleInspectionMaintenance(models.Model):
     _name = 'vehicle.inspection.maintenance'
     _description = 'Vehicle Inspection Maintenance Item'
     _order = 'priority desc, id desc'
 
-    inspection_id = fields.Many2one('vehicle.inspection', string='Inspection',
-                                  required=True)
-    company_id = fields.Many2one(related='inspection_id.company_id',
-                                store=True, string='Company')
+    inspection_id = fields.Many2one('vehicle.inspection', string='Inspection', required=True)
+    company_id = fields.Many2one(related='inspection_id.company_id', store=True, string='Company')
     vehicle_id = fields.Many2one('fleet.vehicle', string='Vehicle', required=True)
     name = fields.Char(string='Maintenance Item', required=True)
     description = fields.Text(string='Description')

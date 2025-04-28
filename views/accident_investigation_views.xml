@@ -83,6 +83,72 @@
                             </group>
                         </group>
                         <notebook>
+                            <page string="Injury Details">
+                                <group>
+                                    <group>
+                                        <field name="injury_abrasion"/>
+                                        <field name="injury_amputation"/>
+                                        <field name="injury_broken_bone"/>
+                                        <field name="injury_bruise"/>
+                                        <field name="injury_burn_heat"/>
+                                        <field name="injury_burn_chemical"/>
+                                    </group>
+                                    <group>
+                                        <field name="injury_concussion"/>
+                                        <field name="injury_crushing"/>
+                                        <field name="injury_cut"/>
+                                        <field name="injury_hernia"/>
+                                        <field name="injury_illness"/>
+                                        <field name="injury_sprain"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Unsafe Workplace Conditions">
+                                <group>
+                                    <group>
+                                        <field name="unsafe_inadequate_guard"/>
+                                        <field name="unsafe_unguarded_hazard"/>
+                                        <field name="unsafe_defective_safety_device"/>
+                                        <field name="unsafe_defective_tool"/>
+                                        <field name="unsafe_workspace_layout"/>
+                                        <field name="unsafe_lighting"/>
+                                    </group>
+                                    <group>
+                                        <field name="unsafe_ventilation"/>
+                                        <field name="unsafe_no_ppe"/>
+                                        <field name="unsafe_no_equipment"/>
+                                        <field name="unsafe_clothing"/>
+                                        <field name="unsafe_no_training"/>
+                                        <field name="unsafe_other"/>
+                                    </group>
+                                </group>
+                                <group invisible="not unsafe_other">
+                                    <field name="unsafe_other_description"/>
+                                </group>
+                            </page>
+                            <page string="Unsafe Acts by People">
+                                <group>
+                                    <group>
+                                        <field name="unsafe_no_permission"/>
+                                        <field name="unsafe_speed"/>
+                                        <field name="unsafe_powered_equipment"/>
+                                        <field name="unsafe_disabled_safety"/>
+                                        <field name="unsafe_defective_use"/>
+                                        <field name="unsafe_improper_use"/>
+                                    </group>
+                                    <group>
+                                        <field name="unsafe_lifting"/>
+                                        <field name="unsafe_posture"/>
+                                        <field name="unsafe_distraction"/>
+                                        <field name="unsafe_no_ppe_use"/>
+                                        <field name="unsafe_no_tool_use"/>
+                                        <field name="unsafe_other_act"/>
+                                    </group>
+                                </group>
+                                <group invisible="not unsafe_other_act">
+                                    <field name="unsafe_other_act_description"/>
+                                </group>
+                            </page>
                             <page string="Incident Details">
                                 <group>
                                     <field name="incident_description"/>

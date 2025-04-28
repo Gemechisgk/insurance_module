@@ -60,14 +60,26 @@
                                 <field name="location"/>
                             </group>
                             <group>
-                                <field name="fire_safety_ok"/>
-                                <field name="emergency_exits_ok"/>
-                                <field name="first_aid_ok"/>
-                                <field name="electrical_safety_ok"/>
-                                <field name="workspace_safety_ok"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
                             </group>
                         </group>
                         <notebook>
+                            <page string="Inspection Details">
+                                <group>
+                                    <group>
+                                        <field name="fire_safety_ok"/>
+                                        <field name="emergency_exits_ok"/>
+                                        <field name="first_aid_ok"/>
+                                        <field name="electrical_safety_ok"/>
+                                        <field name="workspace_safety_ok"/>
+                                    </group>
+                                    <group>
+                                        <field name="housekeeping_ok"/>
+                                        <field name="electrical_hazards_ok"/>
+                                        <field name="confined_space_ok"/>
+                                    </group>
+                                </group>
+                            </page>
                             <page string="Notes">
                                 <group>
                                     <field name="notes" nolabel="1" placeholder="Add inspection notes..."/>
