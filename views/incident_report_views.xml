@@ -1,20 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Incident Investigator Form View -->
+        <record id="view_incident_investigator_form" model="ir.ui.view">
+            <field name="name">incident.investigator.form</field>
+            <field name="model">incident.investigator</field>
+            <field name="arch" type="xml">
+                <form string="Investigator">
+                    <sheet>
+                        <group>
+                            <field name="sequence" widget="handle"/>
+                            <field name="employee_id"/>
+                            <field name="designation"/>
+                            <field name="email"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Incident Investigator List View -->
+        <record id="view_incident_investigator_tree" model="ir.ui.view">
+            <field name="name">incident.investigator.tree</field>
+            <field name="model">incident.investigator</field>
+            <field name="arch" type="xml">
+                <list string="Investigators" editable="bottom" create="true" edit="true">
+                    <field name="sequence" widget="handle"/>
+                    <field name="employee_id" options="{'no_create': True}"/>
+                    <field name="designation"/>
+                    <field name="email"/>
+                </list>
+            </field>
+        </record>
+
         <!-- List View -->
         <record id="view_incident_report_tree" model="ir.ui.view">
-            <field name="name">incident.report.list</field>
+            <field name="name">incident.report.tree</field>
             <field name="model">incident.report</field>
-            <field name="type">list</field>
             <field name="arch" type="xml">
                 <list string="Incident Reports">
                     <field name="name"/>
-                    <field name="incident_date"/>
-                    <field name="employee_id"/>
-                    <field name="department_id"/>
+                    <field name="incident_datetime"/>
                     <field name="incident_type"/>
-                    <field name="location"/>
-                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="driver_name"/>
                     <field name="state"/>
                 </list>
             </field>
@@ -24,35 +52,14 @@
         <record id="view_incident_report_form" model="ir.ui.view">
             <field name="name">incident.report.form</field>
             <field name="model">incident.report</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Incident Report">
                     <header>
-                        <button name="action_report" 
-                                string="Report" 
-                                type="object" 
-                                class="oe_highlight" 
-                                invisible="state != 'draft'"/>
-                        <button name="action_start_investigation" 
-                                string="Start Investigation" 
-                                type="object" 
-                                class="oe_highlight" 
-                                invisible="state != 'reported'"/>
-                        <button name="action_mark_action_required" 
-                                string="Mark Action Required" 
-                                type="object" 
-                                class="oe_highlight" 
-                                invisible="state != 'investigation'"/>
-                        <button name="action_resolve" 
-                                string="Resolve" 
-                                type="object" 
-                                class="oe_highlight" 
-                                invisible="state != 'action'"/>
-                        <button name="action_close" 
-                                string="Close" 
-                                type="object" 
-                                class="oe_highlight" 
-                                invisible="state != 'resolved'"/>
+                        <button name="action_report" string="Report" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_start_investigation" string="Start Investigation" type="object" class="oe_highlight" invisible="state != 'reported'"/>
+                        <button name="action_mark_action_required" string="Mark Action Required" type="object" class="oe_highlight" invisible="state != 'investigation'"/>
+                        <button name="action_resolve" string="Resolve" type="object" class="oe_highlight" invisible="state != 'action'"/>
+                        <button name="action_close" string="Close" type="object" class="oe_highlight" invisible="state != 'resolved'"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,reported,investigation,action,resolved,closed"/>
                     </header>
                     <sheet>
@@ -61,156 +68,157 @@
                                 <field name="name" readonly="1"/>
                             </h1>
                         </div>
+                        <group>
+                            <group>
+                                <field name="incident_datetime"/>
+                            </group>
+                        </group>
+                        
+                        <!-- Incident Investigators Section -->
                         <notebook>
-                            <page string="Personal/Employment Details">
-                                <group>
-                                    <group>
-                                        <field name="employee_id"/>
-                                        <field name="employee_id_number" readonly="1"/>
-                                        <field name="address" readonly="1"/>
-                                        <field name="postcode" readonly="1"/>
-                                        <field name="date_of_birth" readonly="1"/>
-                                        <field name="gender" readonly="1"/>
-                                    </group>
-                                    <group>
-                                        <field name="occupation" readonly="1"/>
-                                        <field name="time_in_job"/>
-                                        <field name="department_id" readonly="1"/>
-                                        <field name="supervisor_id" readonly="1"/>
-                                        <field name="employment_status"/>
-                                        <field name="employer_name" invisible="employment_status != 'contractual'"/>
-                                    </group>
-                                </group>
+                            <page string="Incident Investigators">
+                                <field name="investigator_ids" context="{'default_incident_id': id}" view_mode="list,form" mode="list"/>
                             </page>
-                            
-                            <page string="Occurrence of the Incident">
+
+                            <!-- Incident Details Section -->
+                            <page string="Incident Details">
                                 <group>
                                     <group>
-                                        <field name="incident_date"/>
-                                        <field name="incident_time"/>
-                                        <field name="report_date"/>
-                                        <field name="work_activity"/>
-                                        <field name="location"/>
-                                    </group>
-                                    <group>
-                                        <field name="description"/>
-                                        <field name="witnesses" widget="many2many_tags"/>
-                                    </group>
-                                </group>
-                            </page>
-                            
-                            <page string="Type of Injury" invisible="incident_type != 'injury'">
-                                <group>
-                                    <group string="Injury Types">
-                                        <field name="injury_strain_sprain"/>
-                                        <field name="injury_amputation"/>
-                                        <field name="injury_animal_bite"/>
-                                        <field name="injury_puncture"/>
-                                        <field name="injury_laceration"/>
-                                        <field name="injury_hearing"/>
-                                        <field name="injury_hernia"/>
-                                        <field name="injury_soft_tissue"/>
-                                        <field name="injury_contusion"/>
-                                        <field name="injury_foreign_body"/>
-                                        <field name="injury_welding"/>
-                                        <field name="injury_heat"/>
-                                        <field name="injury_burn_heat"/>
-                                        <field name="injury_burn_chemical"/>
-                                        <field name="injury_burn_other"/>
-                                        <field name="injury_dermatitis"/>
-                                        <field name="injury_dental"/>
-                                        <field name="injury_pain"/>
-                                        <field name="injury_respiratory"/>
-                                        <field name="injury_twist"/>
-                                        <field name="injury_disease"/>
-                                        <field name="injury_toxic"/>
-                                        <field name="injury_whiplash"/>
-                                        <field name="injury_swelling"/>
-                                        <field name="injury_fracture"/>
-                                        <field name="injury_internal"/>
-                                        <field name="injury_crush"/>
-                                        <field name="injury_other"/>
-                                        <field name="injury_other_specify" invisible="not injury_other"/>
-                                    </group>
-                                    <group string="Body Part Injured">
-                                        <field name="body_side"/>
-                                        <field name="body_part_chest"/>
-                                        <field name="body_part_abdomen"/>
-                                        <field name="body_part_hip"/>
-                                        <field name="body_part_genitals"/>
-                                        <field name="body_part_groin"/>
-                                        <field name="body_part_circulatory"/>
-                                        <field name="body_part_arm_upper"/>
-                                        <field name="body_part_arm_lower"/>
-                                        <field name="body_part_elbow"/>
-                                        <field name="body_part_wrist"/>
-                                        <field name="body_part_hand"/>
-                                        <field name="body_part_shoulder"/>
-                                        <field name="body_part_head"/>
-                                        <field name="body_part_scalp"/>
-                                        <field name="body_part_nose"/>
-                                        <field name="body_part_ears"/>
-                                        <field name="body_part_eyes"/>
-                                        <field name="body_part_neck"/>
-                                        <field name="body_part_back_upper"/>
-                                        <field name="body_part_back_middle"/>
-                                        <field name="body_part_back_lower"/>
-                                        <field name="body_part_leg_upper"/>
-                                        <field name="body_part_leg_lower"/>
-                                        <field name="body_part_knee"/>
-                                        <field name="body_part_foot"/>
-                                        <field name="body_part_ankle"/>
-                                        <field name="body_part_finger"/>
-                                        <field name="body_part_toe"/>
-                                        <field name="body_part_other"/>
-                                        <field name="body_part_other_specify" invisible="not body_part_other"/>
-                                    </group>
-                                </group>
-                            </page>
-                            
-                            <page string="Property Damage" invisible="incident_type != 'property_damage'">
-                                <group>
-                                    <field name="property_damage_description"/>
-                                </group>
-                            </page>
-                            
-                            <page string="Treatment" invisible="incident_type != 'injury'">
-                                <group>
-                                    <group>
-                                        <field name="treatment_required"/>
-                                        <field name="first_aid_attendant"/>
-                                        <field name="first_aid_treatment"/>
-                                    </group>
-                                </group>
-                            </page>
-                            
-                            <page string="Work Status" invisible="incident_type != 'injury'">
-                                <group>
-                                    <group>
-                                        <field name="work_status"/>
-                                        <field name="miss_shift"/>
-                                    </group>
-                                </group>
-                            </page>
-                            
-                            <page string="Additional Information">
-                                <group>
-                                    <group>
+                                        <field name="nt_vehicles_involved"/>
+                                        <field name="third_party_vehicles"/>
                                         <field name="incident_type"/>
-                                        <field name="requires_investigation"/>
-                                        <field name="insurance_claim_required"/>
-                                        <field name="insurance_claim_id" invisible="not insurance_claim_required"/>
-                                        <field name="police_report_required"/>
-                                        <field name="police_report_number" invisible="not police_report_required"/>
+                                        <field name="incident_location"/>
                                     </group>
                                 </group>
                             </page>
-                            
-                            <page string="Attachments">
-                                <field name="attachment_ids" widget="many2many_binary"/>
+
+                            <!-- Accident Details Section -->
+                            <page string="Accident Details">
+                                <group>
+                                    <group>
+                                        <field name="road_type"/>
+                                        <field name="road_surface"/>
+                                        <field name="road_condition"/>
+                                        <field name="weather_condition"/>
+                                        <field name="time_of_day"/>
+                                        <field name="street_lighting"/>
+                                        <field name="warning_given"/>
+                                        <field name="third_party_involved"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <!-- Local Authority Section -->
+                            <page string="Local Authority">
+                                <group>
+                                    <group>
+                                        <field name="police_authority"/>
+                                        <field name="case_number"/>
+                                        <field name="investigating_officer"/>
+                                        <field name="officer_contact"/>
+                                        <field name="arrests_charges"/>
+                                        <field name="preliminary_findings"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <!-- Vehicle Details Section -->
+                            <page string="Vehicle Details">
+                                <group>
+                                    <group>
+                                        <field name="vehicle_id"/>
+                                        <field name="vehicle_type"/>
+                                        <field name="vehicle_ownership"/>
+                                        <field name="vehicle_make"/>
+                                        <field name="vehicle_model"/>
+                                        <field name="odometer_reading"/>
+                                        <field name="damage_extent"/>
+                                        <field name="service_records_available"/>
+                                        <field name="last_service_date"/>
+                                        <field name="vehicle_roadworthy"/>
+                                        <field name="product_carried"/>
+                                        <field name="load_secured"/>
+                                        <field name="load_correct"/>
+                                        <field name="product_handling"/>
+                                        <field name="telematics_installed"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <!-- Telematics/GPS Data Section -->
+                            <page string="Telematics/GPS Data">
+                                <group>
+                                    <group>
+                                        <field name="telematics_start_time"/>
+                                        <field name="telematics_end_time"/>
+                                        <field name="time_travelled"/>
+                                        <field name="distance_travelled"/>
+                                        <field name="speed_before_accident"/>
+                                        <field name="speed_at_incident"/>
+                                        <field name="max_speed"/>
+                                        <field name="speed_violations"/>
+                                        <field name="harsh_braking"/>
+                                        <field name="driver_history"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <!-- Driver Details Section -->
+                            <page string="Driver Details" name="driver_details">
+                                <group>
+                                    <field name="driver_id" required="1"/>
+                                    <field name="driver_name" readonly="1"/>
+                                    <field name="driver_age" readonly="1"/>
+                                    <field name="driver_gender" readonly="1"/>
+                                    <field name="employment_period"/>
+                                    <field name="employment_history"/>
+                                    <field name="driver_statement"/>
+                                    <field name="license_valid"/>
+                                    <field name="medical_fitness"/>
+                                    <field name="medical_deviations"/>
+                                    <field name="sick_leave_history"/>
+                                    <field name="medicine_taken"/>
+                                    <field name="total_driving_time"/>
+                                    <field name="six_month_performance"/>
+                                    <field name="root_cause"/>
+                                </group>
+                            </page>
+
+                            <!-- Source of Information Section -->
+                            <page string="Source of Information">
+                                <group>
+                                    <group>
+                                        <field name="source_telematics"/>
+                                        <field name="source_police_report"/>
+                                        <field name="source_maintenance"/>
+                                        <field name="source_field_report"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <!-- Signatures Section -->
+                            <page string="Signatures">
+                                <group>
+                                    <group string="Fleet Operation Department Manager">
+                                        <field name="fleet_manager_name"/>
+                                        <field name="fleet_manager_signature" widget="image"/>
+                                        <field name="fleet_manager_date"/>
+                                    </group>
+                                    <group string="Planning &amp; Safety Department Manager">
+                                        <field name="planning_manager_name"/>
+                                        <field name="planning_manager_signature" widget="image"/>
+                                        <field name="planning_manager_date"/>
+                                    </group>
+                                    <group string="E &amp; Maintenance Department Manager">
+                                        <field name="maintenance_manager_name"/>
+                                        <field name="maintenance_manager_signature" widget="image"/>
+                                        <field name="maintenance_manager_date"/>
+                                    </group>
+                                </group>
                             </page>
                         </notebook>
                     </sheet>
+                    <chatter/>
                 </form>
             </field>
         </record>
@@ -219,21 +227,22 @@
         <record id="view_incident_report_search" model="ir.ui.view">
             <field name="name">incident.report.search</field>
             <field name="model">incident.report</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
-                <search string="Incident Reports">
+                <search string="Search Incident Reports">
                     <field name="name"/>
-                    <field name="employee_id"/>
-                    <field name="location"/>
-                    <field name="department_id"/>
-                    <field name="company_id" groups="base.group_multi_company"/>
-                    <filter string="My Reports" name="my_reports" domain="[('employee_id.user_id', '=', uid)]"/>
-                    <filter string="Requires Investigation" name="investigation_required" domain="[('requires_investigation', '=', True)]"/>
+                    <field name="incident_datetime"/>
+                    <field name="driver_name"/>
+                    <field name="incident_type"/>
+                    <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                    <filter string="Reported" name="reported" domain="[('state','=','reported')]"/>
+                    <filter string="Under Investigation" name="investigation" domain="[('state','=','investigation')]"/>
+                    <filter string="Action Required" name="action" domain="[('state','=','action')]"/>
+                    <filter string="Resolved" name="resolved" domain="[('state','=','resolved')]"/>
+                    <filter string="Closed" name="closed" domain="[('state','=','closed')]"/>
                     <group expand="0" string="Group By">
-                        <filter string="Department" name="department" context="{'group_by': 'department_id'}"/>
-                        <filter string="Company" name="company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
-                        <filter string="Status" name="status" context="{'group_by': 'state'}"/>
-                        <filter string="Incident Type" name="type" context="{'group_by': 'incident_type'}"/>
+                        <filter string="Status" name="groupby_state" context="{'group_by':'state'}"/>
+                        <filter string="Incident Type" name="groupby_type" context="{'group_by':'incident_type'}"/>
+                        <filter string="Date" name="groupby_date" context="{'group_by':'incident_datetime'}"/>
                     </group>
                 </search>
             </field>
@@ -244,15 +253,22 @@
             <field name="name">Incident Reports</field>
             <field name="res_model">incident.report</field>
             <field name="view_mode">list,form</field>
-            <field name="search_view_id" ref="view_incident_report_search"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
-                    Create your first incident report
-                </p>
-                <p>
-                    Record and track workplace incidents.
+                    Create your first incident report!
                 </p>
             </field>
         </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_incident_report_root" 
+                  name="Incident Reports"
+                  sequence="10"/>
+
+        <menuitem id="menu_incident_report"
+                  name="Incident Reports"
+                  parent="menu_incident_report_root"
+                  action="action_incident_report"
+                  sequence="1"/>
     </data>
 </odoo> 

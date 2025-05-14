@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_employee_safety_induction">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>Employee Safety Induction Report</h2>
+                            
+                            <div class="row mt32 mb32">
+                                <div class="col-6">
+                                    <strong>Reference:</strong>
+                                    <span t-field="doc.name"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Date:</strong>
+                                    <span t-field="doc.date"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32">
+                                <div class="col-12">
+                                    <h3>Employee Information</h3>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td><strong>Employee Name:</strong></td>
+                                            <td><span t-field="doc.employee_id.name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Job Position:</strong></td>
+                                            <td><span t-field="doc.employee_id.job_id.name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Department:</strong></td>
+                                            <td><span t-field="doc.employee_id.department_id.name"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32">
+                                <div class="col-12">
+                                    <h3>Induction Details</h3>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td><strong>Status:</strong></td>
+                                            <td><span t-field="doc.state"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32">
+                                <div class="col-12">
+                                    <h3>Notes</h3>
+                                    <p t-field="doc.notes"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt32 mb32">
+                                <div class="col-12">
+                                    <h3>Signature</h3>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <p>Employee Signature</p>
+                                            <div style="border-top: 1px solid black; margin-top: 50px;">
+                                                <span t-field="doc.employee_id.name"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <p>Supervisor Signature</p>
+                                            <div style="border-top: 1px solid black; margin-top: 50px;">
+                                                <span t-field="doc.create_uid.name"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_report_employee_safety_induction" model="ir.actions.report">
+            <field name="name">Employee Safety Induction</field>
+            <field name="model">employee.safety.induction</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">insurance_module.report_employee_safety_induction</field>
+            <field name="report_file">insurance_module.report_employee_safety_induction</field>
+            <field name="print_report_name">'Employee Safety Induction - %s' % (object.name)</field>
+            <field name="attachment">False</field>
+            <field name="binding_model_id" ref="model_employee_safety_induction"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo> 

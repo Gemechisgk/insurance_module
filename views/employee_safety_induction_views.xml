@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_employee_safety_induction_tree" model="ir.ui.view">
+        <field name="name">employee.safety.induction.tree</field>
+        <field name="model">employee.safety.induction</field>
+        <field name="arch" type="xml">
+            <list string="Employee Safety Induction" decoration-info="state == 'draft'" decoration-success="state == 'completed'" decoration-danger="state == 'cancelled'">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_employee_safety_induction_form" model="ir.ui.view">
+        <field name="name">employee.safety.induction.form</field>
+        <field name="model">employee.safety.induction</field>
+        <field name="arch" type="xml">
+            <form string="Employee Safety Induction">
+                <header>
+                    <button name="action_complete" string="Complete" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state != 'draft'"/>
+                    <button name="action_draft" string="Reset to Draft" type="object" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Document">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_employee_safety_induction_search" model="ir.ui.view">
+        <field name="name">employee.safety.induction.search</field>
+        <field name="model">employee.safety.induction</field>
+        <field name="arch" type="xml">
+            <search string="Employee Safety Induction">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Completed" name="completed" domain="[('state','=','completed')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state','=','cancelled')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Employee" name="employee" context="{'group_by':'employee_id'}"/>
+                    <filter string="Status" name="status" context="{'group_by':'state'}"/>
+                    <filter string="Date" name="date" context="{'group_by':'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_employee_safety_induction" model="ir.actions.act_window">
+        <field name="name">Employee Safety Induction</field>
+        <field name="res_model">employee.safety.induction</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_employee_safety_induction_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first employee safety induction!
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_employee_safety_induction"
+              name="Safety Induction"
+              parent="menu_employee_safety"
+              action="action_employee_safety_induction"
+              sequence="100"/>
+</odoo> 

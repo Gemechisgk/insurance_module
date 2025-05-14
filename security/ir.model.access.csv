@@ -3,8 +3,8 @@ access_insurance_type_user,insurance.type.user,model_insurance_type,insurance_mo
 access_insurance_type_manager,insurance.type.manager,model_insurance_type,insurance_module.group_insurance_manager,1,1,1,1
 access_insurance_claim_user,insurance.claim.user,model_insurance_claim,insurance_module.group_insurance_user,1,1,1,0
 access_insurance_claim_manager,insurance.claim.manager,model_insurance_claim,insurance_module.group_insurance_manager,1,1,1,1
-access_incident_report_user,incident.report.user,model_incident_report,insurance_module.group_insurance_user,1,1,1,0
-access_incident_report_manager,incident.report.manager,model_incident_report,insurance_module.group_insurance_manager,1,1,1,1
+access_incident_report_user,incident.report.user,model_incident_report,base.group_user,1,1,1,0
+access_incident_report_manager,incident.report.manager,model_incident_report,base.group_system,1,1,1,1
 access_office_inspection_user,office.inspection.user,model_office_inspection,insurance_module.group_insurance_user,1,1,1,0
 access_office_inspection_manager,office.inspection.manager,model_office_inspection,insurance_module.group_insurance_manager,1,1,1,1
 access_fire_extinguisher_user,fire.extinguisher.user,model_fire_extinguisher,insurance_module.group_insurance_user,1,1,1,0
@@ -25,4 +25,8 @@ access_fire_extinguisher_maintenance_user,fire.extinguisher.maintenance.user,mod
 access_fire_extinguisher_maintenance_manager,fire.extinguisher.maintenance.manager,model_fire_extinguisher_maintenance,insurance_module.group_insurance_manager,1,1,1,1
 access_office_inspection_action_user,office.inspection.action.user,model_office_inspection_action,insurance_module.group_insurance_user,1,1,1,0
 access_office_inspection_action_manager,office.inspection.action.manager,model_office_inspection_action,insurance_module.group_insurance_manager,1,1,1,1
+access_incident_investigator_user,incident.investigator.user,model_incident_investigator,base.group_user,1,1,1,0
+access_incident_investigator_manager,incident.investigator.manager,model_incident_investigator,base.group_system,1,1,1,1
+access_employee_safety_induction_user,employee.safety.induction.user,model_employee_safety_induction,hr.group_hr_user,1,1,1,0
+access_employee_safety_induction_manager,employee.safety.induction.manager,model_employee_safety_induction,hr.group_hr_manager,1,1,1,1
 
