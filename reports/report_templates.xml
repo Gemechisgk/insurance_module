@@ -7,27 +7,114 @@
                 <t t-foreach="docs" t-as="doc">
                     <t t-call="web.external_layout">
                         <div class="page">
+                            <style>
+                                .page {
+                                    width: 100%;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                .text-wrap {
+                                    white-space: normal;
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                }
+                                .mt8 {
+                                    margin-top: 8px;
+                                }
+                                .mb8 {
+                                    margin-bottom: 8px;
+                                }
+                                .table {
+                                    width: 100%;
+                                    table-layout: fixed;
+                                }
+                                .table td {
+                                    word-wrap: break-word;
+                                    overflow-wrap: break-word;
+                                    white-space: normal;
+                                }
+                            </style>
+
                             <h2>Insurance Claim Report</h2>
-                            <div class="row mt32 mb32">
+                            <div class="row mt8 mb8">
                                 <div class="col-6">
-                                    <strong>Claim Number:</strong>
+                                    <strong>Claim Reference:</strong>
                                     <span t-field="doc.name"/>
                                 </div>
                                 <div class="col-6">
-                                    <strong>Claim Date:</strong>
-                                    <span t-field="doc.claim_date"/>
-                                </div>
-                            </div>
-                            <div class="row mt32 mb32">
-                                <div class="col-12">
-                                    <strong>Description:</strong>
-                                    <p t-field="doc.description"/>
-                                </div>
-                            </div>
-                            <div class="row mt32 mb32">
-                                <div class="col-12">
                                     <strong>Status:</strong>
                                     <span t-field="doc.state"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Claim Details</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Insurance Type:</strong>
+                                                <span t-field="doc.insurance_type_id"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Claim Date:</strong>
+                                                <span t-field="doc.claim_date"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Claim Amount:</strong>
+                                                <span t-field="doc.amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                            </td>
+                                            <td>
+                                                <strong>Related Incident:</strong>
+                                                <span t-field="doc.incident_id"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Employee Information</h4>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Employee:</strong>
+                                                <span t-field="doc.employee_id"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Department:</strong>
+                                                <span t-field="doc.department_id"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Description</h4>
+                                    <p class="text-wrap" t-field="doc.description"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8">
+                                <div class="col-12">
+                                    <h4>Additional Notes</h4>
+                                    <p class="text-wrap" t-field="doc.notes"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt8 mb8" t-if="doc.document_ids">
+                                <div class="col-12">
+                                    <h4>Attached Documents</h4>
+                                    <ul>
+                                        <t t-foreach="doc.document_ids" t-as="document">
+                                            <li><span t-field="document.name"/></li>
+                                        </t>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
