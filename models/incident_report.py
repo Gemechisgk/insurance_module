@@ -32,6 +32,7 @@ class IncidentReport(models.Model):
     # Section 1 - Personal/Employment Details
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
     employee_id_number = fields.Char(string='Employee ID', readonly=True)
+    department_id = fields.Many2one('hr.department', string='Department', related='employee_id.department_id', store=True, readonly=True)
     address = fields.Text(string='Address', readonly=True)
     postcode = fields.Char(string='Postcode', readonly=True)
     date_of_birth = fields.Date(string='Date of Birth', readonly=True)

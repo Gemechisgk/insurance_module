@@ -590,20 +590,16 @@
                                     <table class="table table-sm">
                                         <tr>
                                             <td width="50%">
-                                                <strong>Date of Incident:</strong>
+                                                <strong>Date and Time of Incident:</strong>
                                                 <span t-field="doc.incident_datetime"/>
                                             </td>
                                             <td width="50%">
-                                                <strong>Time of Incident:</strong>
-                                                <span t-field="doc.incident_time"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
                                                 <strong>Date Reported:</strong>
                                                 <span t-field="doc.report_date"/>
                                             </td>
-                                            <td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
                                                 <strong>Location:</strong>
                                                 <span t-field="doc.location"/>
                                             </td>
