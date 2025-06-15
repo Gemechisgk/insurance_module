@@ -4,7 +4,8 @@
     <menuitem id="menu_insurance_root"
               name="Safety &amp; Insurance"
               web_icon="insurance_module,static/description/icon.png"
-              sequence="10"/>
+              sequence="10"
+              groups="insurance_module.group_insurance_user,insurance_module.group_insurance_manager"/>
 
     <!-- Parent Menus -->
     <menuitem id="menu_employee_safety"

@@ -9,6 +9,18 @@
             <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="global" eval="True"/>
         </record>
+        <record id="insurance_claim_user_rule" model="ir.rule">
+            <field name="name">Insurance Claim: User Own Records</field>
+            <field name="model_id" ref="model_insurance_claim"/>
+            <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_user'))]"/>
+        </record>
+        <record id="insurance_claim_manager_rule" model="ir.rule">
+            <field name="name">Insurance Claim: Manager All Records</field>
+            <field name="model_id" ref="model_insurance_claim"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_manager'))]"/>
+        </record>
 
         <!-- Incident Report Rules -->
         <record id="incident_report_comp_rule" model="ir.rule">
@@ -16,6 +28,18 @@
             <field name="model_id" ref="model_incident_report"/>
             <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="global" eval="True"/>
+        </record>
+        <record id="incident_report_user_rule" model="ir.rule">
+            <field name="name">Incident Report: User Own Records</field>
+            <field name="model_id" ref="model_incident_report"/>
+            <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_user'))]"/>
+        </record>
+        <record id="incident_report_manager_rule" model="ir.rule">
+            <field name="name">Incident Report: Manager All Records</field>
+            <field name="model_id" ref="model_incident_report"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_manager'))]"/>
         </record>
 
         <!-- Office Inspection Rules -->
@@ -25,6 +49,18 @@
             <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="global" eval="True"/>
         </record>
+        <record id="office_inspection_user_rule" model="ir.rule">
+            <field name="name">Office Inspection: User Own Records</field>
+            <field name="model_id" ref="model_office_inspection"/>
+            <field name="domain_force">['|', ('inspector_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_user'))]"/>
+        </record>
+        <record id="office_inspection_manager_rule" model="ir.rule">
+            <field name="name">Office Inspection: Manager All Records</field>
+            <field name="model_id" ref="model_office_inspection"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_manager'))]"/>
+        </record>
 
         <!-- Vehicle Inspection Rules -->
         <record id="vehicle_inspection_comp_rule" model="ir.rule">
@@ -32,6 +68,18 @@
             <field name="model_id" ref="model_vehicle_inspection"/>
             <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="global" eval="True"/>
+        </record>
+        <record id="vehicle_inspection_user_rule" model="ir.rule">
+            <field name="name">Vehicle Inspection: User Own Records</field>
+            <field name="model_id" ref="model_vehicle_inspection"/>
+            <field name="domain_force">['|', ('inspector_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_user'))]"/>
+        </record>
+        <record id="vehicle_inspection_manager_rule" model="ir.rule">
+            <field name="name">Vehicle Inspection: Manager All Records</field>
+            <field name="model_id" ref="model_vehicle_inspection"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_manager'))]"/>
         </record>
 
         <!-- Employee Suggestion Rules -->
@@ -41,6 +89,18 @@
             <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="global" eval="True"/>
         </record>
+        <record id="employee_suggestion_user_rule" model="ir.rule">
+            <field name="name">Employee Suggestion: User Own Records</field>
+            <field name="model_id" ref="model_employee_suggestion"/>
+            <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_user'))]"/>
+        </record>
+        <record id="employee_suggestion_manager_rule" model="ir.rule">
+            <field name="name">Employee Suggestion: Manager All Records</field>
+            <field name="model_id" ref="model_employee_suggestion"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_manager'))]"/>
+        </record>
 
         <!-- Accident Investigation Rules -->
         <record id="accident_investigation_comp_rule" model="ir.rule">
@@ -48,6 +108,18 @@
             <field name="model_id" ref="model_accident_investigation"/>
             <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
             <field name="global" eval="True"/>
+        </record>
+        <record id="accident_investigation_user_rule" model="ir.rule">
+            <field name="name">Accident Investigation: User Own Records</field>
+            <field name="model_id" ref="model_accident_investigation"/>
+            <field name="domain_force">['|', ('investigator_ids', 'in', [user.id]), ('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_user'))]"/>
+        </record>
+        <record id="accident_investigation_manager_rule" model="ir.rule">
+            <field name="name">Accident Investigation: Manager All Records</field>
+            <field name="model_id" ref="model_accident_investigation"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('insurance_module.group_insurance_manager'))]"/>
         </record>
 
         <!-- Vehicle Inspection Maintenance Rules -->
