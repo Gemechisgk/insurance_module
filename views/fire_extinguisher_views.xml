@@ -52,33 +52,33 @@
                     <sheet>
                         <div class="oe_title">
                             <h1>
-                                <field name="name" placeholder="Serial Number"/>
+                                <field name="name" placeholder="Serial Number" required="1"/>
                             </h1>
                         </div>
                         <group>
                             <group>
-                                <field name="location"/>
-                                <field name="building"/>
+                                <field name="location" required="1"/>
+                                <field name="building" required="1"/>
                                 <field name="floor"/>
-                                <field name="type"/>
-                                <field name="capacity"/>
+                                <field name="type" required="1"/>
+                                <field name="capacity" required="1"/>
                             </group>
                             <group>
-                                <field name="manufacture_date"/>
-                                <field name="installation_date"/>
-                                <field name="expiry_date"/>
+                                <field name="manufacture_date" required="1"/>
+                                <field name="installation_date" required="1"/>
+                                <field name="expiry_date" required="1"/>
                                 <field name="last_inspection_date"/>
                                 <field name="next_inspection_date"/>
-                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="company_id" groups="base.group_multi_company" required="1"/>
                             </group>
                         </group>
                         <notebook>
                             <page string="Maintenance History">
                                 <field name="maintenance_history_ids">
                                     <list editable="bottom">
-                                        <field name="maintenance_date"/>
-                                        <field name="technician_id"/>
-                                        <field name="maintenance_type"/>
+                                        <field name="maintenance_date" required="1"/>
+                                        <field name="technician_id" required="1"/>
+                                        <field name="maintenance_type" required="1"/>
                                         <field name="pressure_check"/>
                                         <field name="nozzle_check"/>
                                         <field name="seal_check"/>

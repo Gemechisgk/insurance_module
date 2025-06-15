@@ -54,13 +54,13 @@
                         </div>
                         <group>
                             <group>
-                                <field name="inspection_date"/>
-                                <field name="inspector_id"/>
-                                <field name="department_id"/>
-                                <field name="location"/>
+                                <field name="inspection_date" required="1"/>
+                                <field name="inspector_id" required="1"/>
+                                <field name="department_id" required="1"/>
+                                <field name="location" required="1"/>
                             </group>
                             <group>
-                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="company_id" groups="base.group_multi_company" required="1"/>
                             </group>
                         </group>
                         <notebook>
@@ -89,9 +89,9 @@
                             <page string="Corrective Actions">
                                 <field name="corrective_action_ids">
                                     <list editable="bottom">
-                                        <field name="name"/>
-                                        <field name="responsible_id"/>
-                                        <field name="deadline"/>
+                                        <field name="name" required="1"/>
+                                        <field name="responsible_id" required="1"/>
+                                        <field name="deadline" required="1"/>
                                         <field name="state"/>
                                         <field name="notes"/>
                                     </list>

@@ -71,6 +71,7 @@
                         <group>
                             <group>
                                 <field name="incident_datetime"/>
+                                <field name="employee_id" required="1"/>
                             </group>
                         </group>
                         

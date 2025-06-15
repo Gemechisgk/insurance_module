@@ -18,5 +18,14 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+
+        <!-- Sequence for Employee Suggestions -->
+        <record id="seq_employee_suggestion" model="ir.sequence">
+            <field name="name">Employee Safety Suggestion</field>
+            <field name="code">employee.suggestion</field>
+            <field name="prefix">SUG/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
     </data>
 </odoo> 

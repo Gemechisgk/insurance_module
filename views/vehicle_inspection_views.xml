@@ -38,10 +38,11 @@
                         </div>
                         <group>
                             <group>
-                                <field name="vehicle_id"/>
-                                <field name="inspector_id"/>
-                                <field name="inspection_date"/>
+                                <field name="vehicle_id" required="1"/>
+                                <field name="inspector_id" required="1"/>
+                                <field name="inspection_date" required="1"/>
                                 <field name="mileage"/>
+                                <field name="company_id" groups="base.group_multi_company" required="1"/>
                             </group>
                         </group>
                         <notebook>

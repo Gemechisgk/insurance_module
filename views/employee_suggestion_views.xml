@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Action -->
+        <record id="action_employee_suggestion" model="ir.actions.act_window">
+            <field name="name">Safety Suggestions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.suggestion</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first safety suggestion
+                </p>
+                <p>
+                    Submit and track safety improvement suggestions.
+                </p>
+            </field>
+        </record>
+
         <!-- List View -->
-        <record id="view_employee_suggestion_tree" model="ir.ui.view">
+        <record id="view_employee_suggestion_list" model="ir.ui.view">
             <field name="name">employee.suggestion.list</field>
             <field name="model">employee.suggestion</field>
-            <field name="type">list</field>
             <field name="arch" type="xml">
-                <list string="Safety Suggestions">
+                <list>
                     <field name="name"/>
                     <field name="employee_id"/>
                     <field name="department_id"/>
@@ -23,32 +39,31 @@
         <record id="view_employee_suggestion_form" model="ir.ui.view">
             <field name="name">employee.suggestion.form</field>
             <field name="model">employee.suggestion</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Safety Suggestion">
+                <form>
                     <header>
                         <button name="action_submit" 
                                 string="Submit" 
                                 type="object" 
-                                class="oe_highlight" 
+                                class="oe_highlight"
                                 invisible="state != 'draft'"/>
                         <button name="action_review" 
                                 string="Review" 
                                 type="object" 
-                                class="oe_highlight" 
+                                class="oe_highlight"
                                 invisible="state != 'submitted'"/>
                         <button name="action_approve" 
                                 string="Approve" 
                                 type="object" 
-                                class="oe_highlight" 
+                                class="oe_highlight"
                                 invisible="state != 'under_review'"/>
                         <button name="action_reject" 
                                 string="Reject" 
-                                type="object" 
+                                type="object"
                                 invisible="state != 'under_review'"/>
                         <button name="action_reset_to_draft" 
                                 string="Reset to Draft" 
-                                type="object" 
+                                type="object"
                                 invisible="state != 'rejected'"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,submitted,under_review,approved,rejected"/>
                     </header>
@@ -63,16 +78,23 @@
                                 <field name="employee_id"/>
                                 <field name="department_id"/>
                                 <field name="category"/>
+                                <field name="suggestion_type"/>
                                 <field name="priority" widget="priority"/>
                             </group>
                             <group>
                                 <field name="submission_date"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="title"/>
                             </group>
                         </group>
                         <notebook>
                             <page string="Description">
-                                <field name="description" placeholder="Describe your safety suggestion..."/>
+                                <group>
+                                    <field name="description" placeholder="Describe your safety suggestion..." nolabel="1"/>
+                                    <field name="current_situation" placeholder="Describe the current situation..." nolabel="1"/>
+                                    <field name="proposed_solution" placeholder="Describe your proposed solution..." nolabel="1"/>
+                                    <field name="expected_benefits" placeholder="Describe the expected benefits..." nolabel="1"/>
+                                </group>
                             </page>
                             <page string="Implementation Plan" invisible="state in ('draft', 'submitted')">
                                 <field name="implementation_plan_ids">
@@ -102,9 +124,8 @@
         <record id="view_employee_suggestion_search" model="ir.ui.view">
             <field name="name">employee.suggestion.search</field>
             <field name="model">employee.suggestion</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
-                <search string="Safety Suggestions">
+                <search>
                     <field name="name"/>
                     <field name="employee_id"/>
                     <field name="department_id"/>
@@ -124,22 +145,6 @@
                         <filter string="Status" name="status" context="{'group_by': 'state'}"/>
                     </group>
                 </search>
-            </field>
-        </record>
-
-        <!-- Action -->
-        <record id="action_employee_suggestion" model="ir.actions.act_window">
-            <field name="name">Safety Suggestions</field>
-            <field name="res_model">employee.suggestion</field>
-            <field name="view_mode">list,form</field>
-            <field name="search_view_id" ref="view_employee_suggestion_search"/>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create your first safety suggestion
-                </p>
-                <p>
-                    Submit and track safety improvement suggestions.
-                </p>
             </field>
         </record>
     </data>

@@ -87,11 +87,4 @@
             </p>
         </field>
     </record>
-
-    <!-- Menu -->
-    <menuitem id="menu_employee_safety_induction"
-              name="Safety Induction"
-              parent="menu_employee_safety"
-              action="action_employee_safety_induction"
-              sequence="100"/>
 </odoo> 
