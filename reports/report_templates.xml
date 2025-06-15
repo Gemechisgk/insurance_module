@@ -934,8 +934,8 @@
                             <h2>Fire Extinguisher Report</h2>
                             <div class="row mt8 mb8">
                                 <div class="col-6">
-                                    <strong>Inspection Date:</strong>
-                                    <span t-field="doc.inspection_date"/>
+                                    <strong>Last Inspection Date:</strong>
+                                    <span t-field="doc.last_inspection_date"/>
                                 </div>
                                 <div class="col-6">
                                     <strong>Location:</strong>
@@ -949,12 +949,42 @@
                                     <table class="table table-sm">
                                         <tr>
                                             <td width="50%">
-                                                <strong>Condition:</strong>
-                                                <span t-field="doc.status"/>
+                                                <strong>Status:</strong>
+                                                <span t-field="doc.state"/>
                                             </td>
                                             <td width="50%">
-                                                <strong>Last Service Date:</strong>
-                                                <span t-field="doc.last_service_date"/>
+                                                <strong>Next Inspection Due:</strong>
+                                                <span t-field="doc.next_inspection_date"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Type:</strong>
+                                                <span t-field="doc.type"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Capacity:</strong>
+                                                <span t-field="doc.capacity"/> kg
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Building:</strong>
+                                                <span t-field="doc.building"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Floor:</strong>
+                                                <span t-field="doc.floor"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <strong>Installation Date:</strong>
+                                                <span t-field="doc.installation_date"/>
+                                            </td>
+                                            <td width="50%">
+                                                <strong>Expiry Date:</strong>
+                                                <span t-field="doc.expiry_date"/>
                                             </td>
                                         </tr>
                                     </table>
