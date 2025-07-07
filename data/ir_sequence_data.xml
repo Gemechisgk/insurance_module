@@ -27,5 +27,14 @@
             <field name="padding">5</field>
             <field name="company_id" eval="False"/>
         </record>
+
+        <!-- Sequence for Welding Machine Inspections -->
+        <record id="seq_welding_machine_inspection" model="ir.sequence">
+            <field name="name">Welding Machine Inspection</field>
+            <field name="code">welding.machine.inspection</field>
+            <field name="prefix">WELD/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
     </data>
 </odoo> 

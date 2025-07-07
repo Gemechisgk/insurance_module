@@ -36,6 +36,7 @@
         'views/employee_suggestion_views.xml',
         'views/res_partner_views.xml',
         'views/office_inspection_views.xml',
+        'views/welding_machine_inspection_views.xml',
         'views/incident_report_views.xml',
         'views/fire_extinguisher_views.xml',
         'views/vehicle_inspection_views.xml',

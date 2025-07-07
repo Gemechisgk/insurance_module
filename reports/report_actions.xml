@@ -79,5 +79,18 @@
             <field name="binding_model_id" ref="model_fire_extinguisher"/>
             <field name="binding_type">report</field>
         </record>
+
+        <!-- Welding Machine Inspection Report Action -->
+        <record id="action_report_welding_machine_inspection" model="ir.actions.report">
+            <field name="name">Welding Machine Inspection Report</field>
+            <field name="model">welding.machine.inspection</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">insurance_module.welding_machine_inspection_report</field>
+            <field name="report_file">insurance_module.welding_machine_inspection_report</field>
+            <field name="print_report_name">'Welding Machine Inspection Report - %s' % (object.name)</field>
+            <field name="attachment">'Welding Machine Inspection Report - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_welding_machine_inspection"/>
+            <field name="binding_type">report</field>
+        </record>
     </data>
 </odoo> 

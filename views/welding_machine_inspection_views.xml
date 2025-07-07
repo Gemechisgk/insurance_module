@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- List View -->
+        <record id="view_welding_machine_inspection_tree" model="ir.ui.view">
+            <field name="name">welding.machine.inspection.tree</field>
+            <field name="model">welding.machine.inspection</field>
+            <field name="arch" type="xml">
+                <list string="Welding Machine Inspections">
+                    <field name="name"/>
+                    <field name="inspection_date"/>
+                    <field name="inspector_id"/>
+                    <field name="reviewer_id"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_welding_machine_inspection_form" model="ir.ui.view">
+            <field name="name">welding.machine.inspection.form</field>
+            <field name="model">welding.machine.inspection</field>
+            <field name="arch" type="xml">
+                <form string="Welding Machine Inspection">
+                    <header>
+                        <button name="action_start_inspection" string="Start Inspection" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_complete_inspection" string="Complete" type="object" class="oe_highlight" invisible="state != 'in_progress'"/>
+                        <button name="action_cancel_inspection" string="Cancel" type="object" invisible="state not in ('draft', 'in_progress')"/>
+                        <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="state != 'cancelled'"/>
+                        <button name="print_report" string="Print Report" type="object" class="oe_highlight" invisible="state != 'done'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" required="1"/>
+                                <field name="inspection_date" required="1"/>
+                                <field name="inspector_id" required="1"/>
+                                <field name="reviewer_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Welding Machine Inspection Checklist">
+                                <group>
+                                    <field name="checklist_1"/>
+                                    <field name="comments_1"/>
+                                    <field name="checklist_2"/>
+                                    <field name="comments_2"/>
+                                    <field name="checklist_3"/>
+                                    <field name="comments_3"/>
+                                    <field name="checklist_4"/>
+                                    <field name="comments_4"/>
+                                    <field name="checklist_5"/>
+                                    <field name="comments_5"/>
+                                    <field name="checklist_6"/>
+                                    <field name="comments_6"/>
+                                </group>
+                            </page>
+                            <page string="Notes &amp; Signatures">
+                                <group>
+                                    <field name="notes"/>
+                                    <field name="sign_inspector"/>
+                                    <field name="sign_reviewer"/>
+                                </group>
+                            </page>
+                            <page string="Attachments">
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_welding_machine_inspection_search" model="ir.ui.view">
+            <field name="name">welding.machine.inspection.search</field>
+            <field name="model">welding.machine.inspection</field>
+            <field name="arch" type="xml">
+                <search string="Welding Machine Inspections">
+                    <field name="name"/>
+                    <field name="inspector_id"/>
+                    <field name="reviewer_id"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="In Progress" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Completed" name="done" domain="[('state', '=', 'done')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Inspector" name="inspector" context="{'group_by': 'inspector_id'}"/>
+                        <filter string="Reviewer" name="reviewer" context="{'group_by': 'reviewer_id'}"/>
+                        <filter string="Status" name="status" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_welding_machine_inspection" model="ir.actions.act_window">
+            <field name="name">Welding Machine Inspections</field>
+            <field name="res_model">welding.machine.inspection</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_welding_machine_inspection_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first welding machine inspection
+                </p>
+                <p>
+                    Track and manage welding machine safety inspections.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 

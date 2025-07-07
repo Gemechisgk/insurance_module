@@ -58,6 +58,12 @@
               action="action_office_inspection"
               sequence="10"/>
 
+    <menuitem id="menu_welding_machine_inspection"
+              name="Welding Machine Inspections"
+              parent="menu_safety_management"
+              action="action_welding_machine_inspection"
+              sequence="15"/>
+
     <menuitem id="menu_incident_report"
               name="Incident Reports"
               parent="menu_safety_management"

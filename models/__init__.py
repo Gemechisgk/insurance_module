@@ -8,4 +8,5 @@ from . import vehicle_inspection
 from . import insurance_claim
 from . import insurance_type
 from . import employee_suggestion
-from . import employee_safety_induction 
+from . import employee_safety_induction
+from . import welding_machine_inspection 
