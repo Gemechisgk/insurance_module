@@ -54,6 +54,14 @@ class InsuranceClaim(models.Model):
         ('rejected', 'Rejected')
     ], string='Status', default='draft', tracking=True)
 
+    insurance_company_id = fields.Many2one(
+        'res.partner',
+        string='Insurance Company',
+        domain="[('is_company', '=', True)]",
+        tracking=True,
+        help='Select the insurance company handling this claim.'
+    )
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
@@ -85,4 +93,4 @@ class InsuranceClaim(models.Model):
     @api.onchange('employee_id')
     def _onchange_employee_id(self):
         if self.employee_id:
-            self.department_id = self.employee_id.department_id 
+            self.department_id = self.employee_id.department_id
