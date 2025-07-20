@@ -1024,9 +1024,13 @@
                                     <strong>Last Inspection Date:</strong>
                                     <span t-field="doc.last_inspection_date"/>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6" t-if="doc.category == 'building'">
                                     <strong>Location:</strong>
                                     <span t-field="doc.location"/>
+                                </div>
+                                <div class="col-6" t-if="doc.category == 'vehicle'">
+                                    <strong>Fleet:</strong>
+                                    <span t-field="doc.fleet_id"/>
                                 </div>
                             </div>
 
@@ -1055,10 +1059,6 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td width="50%">
-                                                <strong>Building:</strong>
-                                                <span t-field="doc.building"/>
-                                            </td>
                                             <td width="50%">
                                                 <strong>Floor:</strong>
                                                 <span t-field="doc.floor"/>

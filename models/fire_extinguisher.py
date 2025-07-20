@@ -11,8 +11,12 @@ class FireExtinguisher(models.Model):
     name = fields.Char(string='Serial Number', required=True, tracking=True)
     company_id = fields.Many2one('res.company', string='Company', required=True,
                                 default=lambda self: self.env.company)
-    location = fields.Char(string='Location', required=True, tracking=True)
-    building = fields.Char(string='Building', required=True)
+    location = fields.Char(string='Location', tracking=True)
+    category = fields.Selection([
+        ('building', 'Building'),
+        ('vehicle', 'Vehicle')
+    ], string='Category', required=True, default='building')
+    fleet_id = fields.Many2one('fleet.vehicle', string='Fleet')
     floor = fields.Char(string='Floor')
     
     type = fields.Selection([
@@ -60,6 +64,14 @@ class FireExtinguisher(models.Model):
             if record.expiry_date and record.manufacture_date and \
                record.expiry_date < record.manufacture_date:
                 raise ValidationError(_('Expiry date cannot be before manufacturing date.'))
+    
+    @api.constrains('category', 'location', 'fleet_id')
+    def _check_location_and_fleet(self):
+        for rec in self:
+            if rec.category == 'building' and not rec.location:
+                raise ValidationError(_('Location is required when category is Building.'))
+            if rec.category == 'vehicle' and not rec.fleet_id:
+                raise ValidationError(_('Fleet is required when category is Vehicle.'))
     
     def action_set_maintenance(self):
         self.write({'state': 'maintenance'})

@@ -57,9 +57,9 @@
                         </div>
                         <group>
                             <group>
-                                <field name="location" required="1"/>
-                                <field name="building" required="1"/>
-                                <field name="floor"/>
+                                <field name="category" widget="selection" options="{'building':'Building','vehicle':'Vehicle'}" required="1"/>
+                                <field name="location" invisible="category != 'building'"/>
+                                <field name="fleet_id" invisible="category != 'vehicle'"/>
                                 <field name="type" required="1"/>
                                 <field name="capacity" required="1"/>
                             </group>
@@ -107,8 +107,8 @@
                 <search string="Fire Extinguishers">
                     <field name="name"/>
                     <field name="location"/>
-                    <field name="building"/>
-                    <field name="type"/>
+                    <field name="category"/>
+                    <field name="fleet_id"/>
                     <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
                     <filter string="Under Maintenance" name="maintenance" domain="[('state', '=', 'maintenance')]"/>
                     <filter string="Expired" name="expired" domain="[('state', '=', 'expired')]"/>
@@ -117,8 +117,8 @@
                     <filter string="Needs Inspection" name="needs_inspection" 
                             domain="[('next_inspection_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
                     <group expand="0" string="Group By">
+                        <filter string="Category" name="category" context="{'group_by': 'category'}"/>
                         <filter string="Location" name="location" context="{'group_by': 'location'}"/>
-                        <filter string="Building" name="building" context="{'group_by': 'building'}"/>
                         <filter string="Type" name="type" context="{'group_by': 'type'}"/>
                         <filter string="Status" name="status" context="{'group_by': 'state'}"/>
                     </group>

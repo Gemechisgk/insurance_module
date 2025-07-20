@@ -66,7 +66,7 @@
 
     <menuitem id="menu_incident_report"
               name="Incident Reports"
-              parent="menu_safety_management"
+              parent="menu_investigations"
               action="action_incident_report"
               sequence="20"/>
 

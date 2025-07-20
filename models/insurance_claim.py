@@ -31,7 +31,7 @@ class InsuranceClaim(models.Model):
                                        required=True, tracking=True)
     claim_date = fields.Date('Claim Date', default=fields.Date.context_today,
                             required=True, tracking=True)
-    amount = fields.Monetary('Claim Amount', required=True, tracking=True)
+    amount = fields.Monetary('Claim Amount', tracking=True)
     currency_id = fields.Many2one('res.currency', string='Currency',
                                  default=lambda self: self.env.company.currency_id)
     
@@ -87,7 +87,7 @@ class InsuranceClaim(models.Model):
     @api.constrains('amount')
     def _check_amount(self):
         for record in self:
-            if record.amount <= 0:
+            if record.amount is not None and record.amount != 0 and record.amount <= 0:
                 raise ValidationError(_("The claim amount must be positive."))
 
     @api.onchange('employee_id')

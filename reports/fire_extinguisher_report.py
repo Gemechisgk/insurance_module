@@ -12,4 +12,6 @@ class FireExtinguisherReport(models.AbstractModel):
             'doc_model': 'fire.extinguisher',
             'docs': docs,
             'data': data,
+            'show_location': lambda doc: doc.category_type == 'building',
+            'show_fleet': lambda doc: doc.category_type == 'vehicle',
         } 

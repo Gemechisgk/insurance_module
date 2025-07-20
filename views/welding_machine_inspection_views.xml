@@ -61,13 +61,13 @@
                                     <field name="comments_6"/>
                                 </group>
                             </page>
-                            <page string="Notes &amp; Signatures">
+                            <!-- <page string="Notes &amp; Signatures">
                                 <group>
                                     <field name="notes"/>
                                     <field name="sign_inspector"/>
                                     <field name="sign_reviewer"/>
                                 </group>
-                            </page>
+                            </page> -->
                             <page string="Attachments">
                                 <field name="attachment_ids" widget="many2many_binary"/>
                             </page>
