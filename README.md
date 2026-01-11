@@ -1,7 +1,7 @@
 # Safety, Health, and Insurance Module
 
 ## Overview
-This module provides comprehensive safety, health, and insurance management features for Odoo 18. It helps organizations manage workplace safety, incident reporting, employee safety feedback, fire safety, accident investigations, vehicle inspections, and insurance documentation.
+This module provides comprehensive safety, health, and insurance management features. It helps organizations manage workplace safety, incident reporting, employee safety feedback, fire safety, accident investigations, vehicle inspections, and insurance documentation.
 
 ## Features
 
@@ -61,8 +61,8 @@ This module provides comprehensive safety, health, and insurance management feat
 
 ## Installation
 
-1. Copy the module to your Odoo addons directory
-2. Update the module list in Odoo
+1. Copy the module to your addons directory
+2. Update the module list
 3. Install the module from the Apps menu
 4. Configure the module settings in the Safety & Insurance Configuration menu
 
@@ -109,8 +109,7 @@ The module includes two security groups:
 ## Support
 
 For support and questions, please contact:
-- Email: support@yourcompany.com
-- Website: https://www.yourcompany.com
+- Email: gemechis.gk@gmail.com
 
 ## License
 
@@ -124,6 +123,6 @@ This module is licensed under LGPL-3.
 ## Changelog
 
 ### Version 18.0.1.0.0
-- Initial release for Odoo 18
+- Initial release
 - Basic safety and insurance management features
 - Integration with HR and Fleet modules 
