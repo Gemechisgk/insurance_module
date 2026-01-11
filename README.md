@@ -1,4 +1,4 @@
-# Safety, Health, and Insurance Module for Odoo 18
+# Safety, Health, and Insurance Module
 
 ## Overview
 This module provides comprehensive safety, health, and insurance management features for Odoo 18. It helps organizations manage workplace safety, incident reporting, employee safety feedback, fire safety, accident investigations, vehicle inspections, and insurance documentation.
